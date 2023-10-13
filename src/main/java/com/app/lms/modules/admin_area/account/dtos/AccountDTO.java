@@ -1,4 +1,4 @@
-package com.app.lms.modules.account.dtos;
+package com.app.lms.modules.admin_area.account.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.app.lms.modules.account.entities;
+package com.app.lms.modules.admin_area.account.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
