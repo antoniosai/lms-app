@@ -2,38 +2,43 @@ package com.app.lms.core.exceptions;
 
 
 import com.app.lms.core.errors.AppError;
-import com.app.lms.core.errors.NoHandlerError;
+import com.app.lms.core.utils.StringUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpException;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
+
+    StringUtil stringUtil = new StringUtil();
 
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -47,6 +52,25 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         return new ResponseEntity(appError, exception.getHttpStatus());
+    }
+
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        List<FieldError> errorList = ex
+                .getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .toList();
+
+        AppError appError = new AppError(HttpStatus.BAD_REQUEST, "Ops!! Can't Process the Request");
+        if (ex.getFieldErrors().size() != 0) {
+            appError.addValidationErrors(errorList);
+        } else {
+            appError.addValidationErrors(new ArrayList<>());
+        }
+
+        return new ResponseEntity(appError, HttpStatus.BAD_REQUEST);
     }
 
     @ResponseBody
