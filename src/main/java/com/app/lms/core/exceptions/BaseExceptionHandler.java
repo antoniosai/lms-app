@@ -169,9 +169,12 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         if(exception instanceof DataIntegrityViolationException) {
-            String errorMessage = "Conflict on Column: " + StringUtil.transformToCamelCase(extractConflictingValue((DataIntegrityViolationException) exception));
+            String columnName = StringUtil.transformToCamelCase(extractConflictingValue((DataIntegrityViolationException) exception));
+            String errorMessage = "Conflict on: " +  columnName;
             log.error(errorMessage);
             AppError appError = new AppError(HttpStatus.CONFLICT, errorMessage);
+
+            appError.addValidationError(null, columnName, null, errorMessage);
             return new ResponseEntity(appError, appError.getHttpStatus());
         }
 

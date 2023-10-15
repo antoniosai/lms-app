@@ -72,7 +72,7 @@ public class AppError {
         errorsDetails.addAll(errors);
     }
 
-    private void addValidationError(String object, String field, Object rejectedValue, String message) {
+    public void addValidationError(String object, String field, Object rejectedValue, String message) {
         addSubError(new AppParameterValidationError(object, field, rejectedValue, message));
     }
 
