@@ -53,18 +53,28 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDTO updateStudentByUuid(UUID studentUuid, StudentDTO newStudentData) {
-        return null;
+
+        newStudentData.setStudentUuid(studentUuid);
+
+        StudentEntity updatedStudent = studentMainRepository.save(ObjectMapperUtil.map(newStudentData, StudentEntity.class));
+
+        return ObjectMapperUtil.map(updatedStudent, StudentDTO.class);
     }
 
     @Override
-    public void deleteStudentByUuid(UUID studentUuid) {
+    public void deleteStudentByUuid(UUID studentUuid) throws NotFoundException {
+        log.info("Deleting Student with UUID => " + studentUuid);
 
+        findSingleStudentByUuid(studentUuid);
+
+        studentMainRepository.deleteById(studentUuid);
     }
 
     private StudentDTO findSingleStudentByUuid(UUID studentUuid) throws NotFoundException {
         StudentEntity student = JpaResultHelperUtil.getSingleResultFromOptional(studentMainRepository.findById(studentUuid));
 
         if(student == null) {
+            log.info("Student Not Found");
             throw new NotFoundException("Student Not Found");
         }
 

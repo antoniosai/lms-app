@@ -51,23 +51,24 @@ public class StudentControllerImpl implements StudentController {
     public ResponseEntity<HttpResponseDTO<StudentDTO>> createNewStudent(@Valid @RequestBody StudentDTO newStudentData) {
         return new HttpResponseDTO<>(studentService.createNewStudent(newStudentData), HttpStatus.CREATED)
                 .setResponseHeaders("newStudentData", newStudentData)
-                .toResponse("Successfully Created an Student");
+                .toResponse("Successfully Created a Student");
     }
 
     @Override
     @PutMapping(value = "/{studentUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<StudentDTO>> updateStudentByUuid(UUID studentUuid, StudentDTO newStudentData) {
+    public ResponseEntity<HttpResponseDTO<StudentDTO>> updateStudentByUuid(@PathVariable UUID studentUuid, @RequestBody @Valid StudentDTO newStudentData) {
         return new HttpResponseDTO<>(studentService.updateStudentByUuid(studentUuid, newStudentData))
                 .setResponseHeaders("newStudentData", newStudentData)
-                .toResponse("Successfully Updated an Student By UUID from Server");
+                .toResponse("Successfully Updated a Student By UUID from Server");
     }
 
     @Override
     @DeleteMapping(value = "/{studentUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<String>> deleteStudentByUuid(UUID studentUuid) throws NotFoundException {
+    public ResponseEntity<HttpResponseDTO<String>> deleteStudentByUuid(@PathVariable UUID studentUuid) throws NotFoundException {
+        studentService.deleteStudentByUuid(studentUuid);
         return new HttpResponseDTO<>("Student has been Deleted")
                 .setResponseHeaders("studentUuid", studentUuid)
-                .toResponse("Successfully Deleted an Student By UUID from Server");
+                .toResponse("Successfully Deleted a Student By UUID from Server");
     }
 
 }

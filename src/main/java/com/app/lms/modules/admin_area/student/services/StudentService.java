@@ -14,5 +14,5 @@ public interface StudentService {
     StudentDTO getStudentByUuid(UUID studentUuid) throws NotFoundException;
     StudentDTO createNewStudent(StudentDTO newStudentData);
     StudentDTO updateStudentByUuid(UUID studentUuid, StudentDTO newStudentData);
-    void deleteStudentByUuid(UUID studentUuid);
+    void deleteStudentByUuid(UUID studentUuid) throws NotFoundException;
 }
