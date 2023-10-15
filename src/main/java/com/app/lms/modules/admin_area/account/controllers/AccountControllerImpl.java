@@ -1,7 +1,6 @@
 package com.app.lms.modules.admin_area.account.controllers;
 
 import com.app.lms.core.dtos.HttpResponseDTO;
-import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.admin_area.account.dtos.AccountDTO;
 import com.app.lms.modules.admin_area.account.services.AccountService;
