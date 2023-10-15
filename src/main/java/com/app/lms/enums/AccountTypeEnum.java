@@ -1,2 +1,5 @@
-package com.app.lms.enums;public class AccountTypeEnum {
+package com.app.lms.enums;
+
+public enum AccountTypeEnum {
+    STUDENT, INSTRUCTOR, ADMINISTRATOR
 }
