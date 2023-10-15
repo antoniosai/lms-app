@@ -1,7 +1,10 @@
 package com.app.lms.modules.admin_area.student.services;
 
 import com.app.lms.core.exceptions.NotFoundException;
-import com.app.lms.core.utils.*;
+import com.app.lms.core.utils.JpaResultHelperUtil;
+import com.app.lms.core.utils.ObjectMapperUtil;
+import com.app.lms.core.utils.PaginationUtil;
+import com.app.lms.core.utils.SpecificationUtil;
 import com.app.lms.modules.admin_area.student.dtos.StudentDTO;
 import com.app.lms.modules.admin_area.student.entities.StudentEntity;
 import com.app.lms.modules.admin_area.student.repositories.StudentMainRepository;
@@ -10,9 +13,6 @@ import com.app.lms.modules.admin_area.student.specifications.StudentSpecificatio
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

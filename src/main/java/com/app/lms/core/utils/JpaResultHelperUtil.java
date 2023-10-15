@@ -1,10 +1,10 @@
 package com.app.lms.core.utils;
 
 import com.app.lms.core.exceptions.NotFoundException;
-import org.springframework.stereotype.Component;
-
 import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.Query;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Optional;
 

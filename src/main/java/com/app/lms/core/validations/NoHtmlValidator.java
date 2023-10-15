@@ -1,9 +1,8 @@
 package com.app.lms.core.validations;
 
-import org.owasp.encoder.Encode;
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.owasp.encoder.Encode;
 
 public class NoHtmlValidator implements ConstraintValidator<IsSanitized, String> {
     @Override

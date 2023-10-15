@@ -3,24 +3,17 @@ package com.app.lms.modules.admin_area.account.services;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.JpaResultHelperUtil;
 import com.app.lms.core.utils.ObjectMapperUtil;
-import com.app.lms.core.utils.PaginationUtil;
 import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.admin_area.account.dtos.AccountDTO;
 import com.app.lms.modules.admin_area.account.entities.AccountEntity;
 import com.app.lms.modules.admin_area.account.repositories.AccountMainRepository;
-import com.app.lms.modules.admin_area.account.requests.GetAccountRequest;
 import com.app.lms.modules.admin_area.instructor.entities.InstructorEntity;
 import com.app.lms.modules.admin_area.instructor.repositories.InstructorMainRepository;
 import com.app.lms.modules.admin_area.student.entities.StudentEntity;
 import com.app.lms.modules.admin_area.student.repositories.StudentMainRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 

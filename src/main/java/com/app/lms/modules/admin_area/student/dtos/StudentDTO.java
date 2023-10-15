@@ -1,7 +1,6 @@
 package com.app.lms.modules.admin_area.student.dtos;
 
 import com.app.lms.modules.admin_area.account.dtos.AccountDTO;
-import com.app.lms.modules.admin_area.account.entities.AccountEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Data
