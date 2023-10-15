@@ -6,6 +6,7 @@ import com.app.lms.modules.admin_area.student.dtos.StudentDTO;
 import com.app.lms.modules.admin_area.student.entities.StudentEntity;
 import com.app.lms.modules.admin_area.student.requests.GetStudentRequest;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface StudentService {
@@ -14,5 +15,6 @@ public interface StudentService {
     StudentDTO getStudentByUuid(UUID studentUuid) throws NotFoundException;
     StudentDTO createNewStudent(StudentDTO newStudentData);
     StudentDTO updateStudentByUuid(UUID studentUuid, StudentDTO newStudentData);
+    List<StudentDTO> findByAccountUuid(UUID studentUuid);
     void deleteStudentByUuid(UUID studentUuid) throws NotFoundException;
 }

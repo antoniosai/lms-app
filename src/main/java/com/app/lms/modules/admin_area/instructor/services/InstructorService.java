@@ -6,6 +6,7 @@ import com.app.lms.modules.admin_area.instructor.dtos.InstructorDTO;
 import com.app.lms.modules.admin_area.instructor.entities.InstructorEntity;
 import com.app.lms.modules.admin_area.instructor.requests.GetInstructorRequest;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface InstructorService {
@@ -14,5 +15,6 @@ public interface InstructorService {
     InstructorDTO getInstructorByUuid(UUID instructorUuid) throws NotFoundException;
     InstructorDTO createNewInstructor(InstructorDTO newInstructorData);
     InstructorDTO updateInstructorByUuid(UUID instructorUuid, InstructorDTO newInstructorData);
+    List<InstructorDTO> findByAccountUuid(UUID instructorUuid);
     void deleteInstructorByUuid(UUID instructorUuid);
 }

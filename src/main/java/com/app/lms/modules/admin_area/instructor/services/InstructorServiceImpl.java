@@ -1,6 +1,7 @@
 package com.app.lms.modules.admin_area.instructor.services;
 
 import com.app.lms.core.exceptions.NotFoundException;
+import com.app.lms.core.utils.ObjectMapperUtil;
 import com.app.lms.core.utils.PaginationUtil;
 import com.app.lms.modules.admin_area.instructor.dtos.InstructorDTO;
 import com.app.lms.modules.admin_area.instructor.entities.InstructorEntity;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -49,6 +51,11 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public InstructorDTO updateInstructorByUuid(UUID instructorUuid, InstructorDTO newInstructorData) {
         return null;
+    }
+
+    @Override
+    public List<InstructorDTO> findByAccountUuid(UUID instructorUuid) {
+        return ObjectMapperUtil.mapAll(instructorMainRepository.findByAccountUuid(instructorUuid), InstructorDTO.class);
     }
 
     @Override

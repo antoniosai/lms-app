@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -62,10 +63,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<StudentDTO> findByAccountUuid(UUID studentUuid) {
+        return ObjectMapperUtil.mapAll(studentMainRepository.findByAccountUuid(studentUuid), StudentDTO.class);
+    }
+
+    @Override
     public void deleteStudentByUuid(UUID studentUuid) throws NotFoundException {
         log.info("Deleting Student with UUID => " + studentUuid);
 
         findSingleStudentByUuid(studentUuid);
+
+        // Delete Account ID
 
         studentMainRepository.deleteById(studentUuid);
     }

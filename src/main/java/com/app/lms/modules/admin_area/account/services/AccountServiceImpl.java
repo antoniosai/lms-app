@@ -8,10 +8,10 @@ import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.admin_area.account.dtos.AccountDTO;
 import com.app.lms.modules.admin_area.account.entities.AccountEntity;
 import com.app.lms.modules.admin_area.account.repositories.AccountMainRepository;
-import com.app.lms.modules.admin_area.instructor.entities.InstructorEntity;
-import com.app.lms.modules.admin_area.instructor.repositories.InstructorMainRepository;
-import com.app.lms.modules.admin_area.student.entities.StudentEntity;
-import com.app.lms.modules.admin_area.student.repositories.StudentMainRepository;
+import com.app.lms.modules.admin_area.instructor.dtos.InstructorDTO;
+import com.app.lms.modules.admin_area.instructor.services.InstructorService;
+import com.app.lms.modules.admin_area.student.dtos.StudentDTO;
+import com.app.lms.modules.admin_area.student.services.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,10 +27,10 @@ public class AccountServiceImpl implements AccountService {
     private AccountMainRepository accountMainRepository;
 
     @Autowired
-    private StudentMainRepository studentMainRepository;
+    private StudentService studentService;
 
     @Autowired
-    private InstructorMainRepository instructorMainRepository;
+    private InstructorService instructorService;
 
     @Override
     public UserDetailsService userDetailsService() {
@@ -57,10 +57,28 @@ public class AccountServiceImpl implements AccountService {
             accountData = createAccount(accountData, AccountTypeEnum.ADMINISTRATOR);
             account = attachAccountToInstructor(userUuid, accountData);
         } else {
-            throw new NotFoundException("Account Type Not Found. Please select one of these: STUDENT, INSTRUCTOR, ADMINISTRATOR");
+            throw new Exception("Account Type Not Found. Please select one of these: STUDENT, INSTRUCTOR, ADMINISTRATOR");
         }
 
         return account;
+    }
+
+    @Override
+    public void detachAccount(UUID accountUuid) throws NotFoundException {
+        AccountDTO existingAccount = findAccountByUuid(accountUuid);
+
+        if(existingAccount.getAccountType() == AccountTypeEnum.STUDENT) {
+
+        }
+
+        if(existingAccount.getAccountType() == AccountTypeEnum.INSTRUCTOR) {
+
+        }
+
+        // TODO: Create a process to delete Account UUID from Administrator
+        if(existingAccount.getAccountType() == AccountTypeEnum.ADMINISTRATOR) {
+
+        }
     }
 
     @Override
@@ -99,44 +117,49 @@ public class AccountServiceImpl implements AccountService {
 
     private boolean checkUserAccountIfExists(AccountTypeEnum accountType, UUID userUuid) {
         if(AccountTypeEnum.STUDENT == accountType) {
-            return !studentMainRepository.findByAccountUuid(userUuid).isEmpty();
+            return !studentService.findByAccountUuid(userUuid).isEmpty();
         } else if(AccountTypeEnum.INSTRUCTOR == accountType) {
-            return !instructorMainRepository.findByAccountUuid(userUuid).isEmpty();
+            return !instructorService.findByAccountUuid(userUuid).isEmpty();
         } else if(AccountTypeEnum.ADMINISTRATOR == accountType) {
-            return JpaResultHelperUtil.getSingleResultFromOptional(instructorMainRepository.findById(userUuid)) != null;
+            return !studentService.findByAccountUuid(userUuid).isEmpty();
         } else {
             return false;
         }
     }
 
-    private AccountDTO attachAccountToStudent(UUID studentUuid, AccountDTO account) {
+    private AccountDTO attachAccountToStudent(UUID studentUuid, AccountDTO account) throws NotFoundException {
 
         // Find Data by UUID
-        StudentEntity student = JpaResultHelperUtil.getSingleResultFromOptional(studentMainRepository.findById(studentUuid));
+        StudentDTO student = studentService.getStudentByUuid(studentUuid);
 
         // Update StudentAccount from fetched Data Before
-        student.setStudentAccount(ObjectMapperUtil.map(account, AccountEntity.class));
+        student.setStudentAccount(ObjectMapperUtil.map(account, AccountDTO.class));
 
         // Update value
-        studentMainRepository.save(student);
+        studentService.updateStudentByUuid(studentUuid, ObjectMapperUtil.map(student, StudentDTO.class));
 
         return account;
     }
 
     private AccountDTO attachAccountToAdministrator(UUID administratorUuid, AccountDTO account) {
-        StudentEntity administrator = JpaResultHelperUtil.getSingleResultFromOptional(studentMainRepository.findById(administratorUuid));
-
-        administrator.setStudentAccount(ObjectMapperUtil.map(account, AccountEntity.class));
+        //        TODO: Create administrator
+//        StudentEntity administrator = JpaResultHelperUtil.getSingleResultFromOptional(studentService.findById(administratorUuid));
+//
+//        administrator.setStudentAccount(ObjectMapperUtil.map(account, AccountEntity.class));
 
         return account;
     }
 
-    private AccountDTO attachAccountToInstructor(UUID instructorUuid, AccountDTO account) {
-        InstructorEntity instructor = JpaResultHelperUtil.getSingleResultFromOptional(instructorMainRepository.findById(instructorUuid));
+    private AccountDTO attachAccountToInstructor(UUID instructorUuid, AccountDTO account) throws NotFoundException {
 
-        instructor.setInstructorAccount(ObjectMapperUtil.map(account, AccountEntity.class));
+        // Find Data by UUID
+        InstructorDTO instructor = instructorService.getInstructorByUuid(instructorUuid);
 
-        instructorMainRepository.save(instructor);
+        // Update InstructorAccount from fetched Data Before
+        instructor.setInstructorAccount(ObjectMapperUtil.map(account, AccountDTO.class));
+
+        // Update value
+        instructorService.updateInstructorByUuid(instructorUuid, ObjectMapperUtil.map(instructor, InstructorDTO.class));
 
         return account;
     }

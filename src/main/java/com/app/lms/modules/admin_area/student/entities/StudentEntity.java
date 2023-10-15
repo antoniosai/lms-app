@@ -44,7 +44,7 @@ public class StudentEntity extends TimestampEntityAbstraction {
     @Column(name = "student_profile_picture")
     private String studentProfilePicture;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "student_account_uuid", referencedColumnName = "account_uuid")
     private AccountEntity studentAccount;
 }

@@ -1,5 +1,6 @@
 package com.app.lms.modules.admin_area.instructor.dtos;
 
+import com.app.lms.modules.admin_area.account.dtos.AccountDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,4 +34,7 @@ public class InstructorDTO {
 
     @JsonProperty("profilePicture")
     private String instructorProfilePicture;
+
+    @JsonProperty("account")
+    private AccountDTO instructorAccount;
 }
