@@ -19,4 +19,8 @@ public class StringUtil {
 
     }
 
+    public static String transformToKeyword(String s) {
+        return "%" + s + "%";
+    }
+
 }
