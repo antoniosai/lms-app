@@ -14,7 +14,6 @@ import com.app.lms.modules.admin_area.student.entities.StudentEntity;
 import com.app.lms.modules.admin_area.student.repositories.StudentMainRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -35,12 +34,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public UserDetailsService userDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) {
-                return accountMainRepository.findByAccountUsername(username);
-            }
-        };
+        return username -> accountMainRepository.findByAccountUsername(username);
     }
 
     @Override
