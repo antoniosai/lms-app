@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class InstructorDTO {
 
-    @JsonProperty("Uuid")
+    @JsonProperty("uuid")
     private UUID instructorUuid;
 
     @JsonProperty("identificationNumber")

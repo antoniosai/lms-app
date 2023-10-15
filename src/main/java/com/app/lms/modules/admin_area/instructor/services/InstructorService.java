@@ -11,10 +11,10 @@ import java.util.UUID;
 
 public interface InstructorService {
 
-    PaginationUtil<InstructorEntity, InstructorDTO> getInstructorByPagination(Integer page, Integer perPage, GetInstructorRequest getInstructorRequest);
+    PaginationUtil<InstructorEntity, InstructorDTO> getInstructorByPagination(int page, int perPage, GetInstructorRequest getInstructorRequest);
     InstructorDTO getInstructorByUuid(UUID instructorUuid) throws NotFoundException;
     InstructorDTO createNewInstructor(InstructorDTO newInstructorData);
     InstructorDTO updateInstructorByUuid(UUID instructorUuid, InstructorDTO newInstructorData);
     List<InstructorDTO> findByAccountUuid(UUID instructorUuid);
-    void deleteInstructorByUuid(UUID instructorUuid);
+    void deleteInstructorByUuid(UUID instructorUuid) throws NotFoundException;
 }
