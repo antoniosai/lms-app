@@ -12,10 +12,7 @@ public interface InstructorService {
 
     PaginationUtil<InstructorEntity, InstructorDTO> getInstructorByPagination(Integer page, Integer perPage, GetInstructorRequest getInstructorRequest);
     InstructorDTO getInstructorByUuid(UUID instructorUuid) throws NotFoundException;
-
     InstructorDTO createNewInstructor(InstructorDTO newInstructorData);
-
     InstructorDTO updateInstructorByUuid(UUID instructorUuid, InstructorDTO newInstructorData);
-
     void deleteInstructorByUuid(UUID instructorUuid);
 }

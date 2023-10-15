@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/instructor")
+@RequestMapping(path = "/v1/admin-area/instructors")
 @Validated
 public class InstructorControllerImpl implements InstructorController {
 }
