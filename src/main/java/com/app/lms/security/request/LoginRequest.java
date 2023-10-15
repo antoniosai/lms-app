@@ -1,4 +1,4 @@
-package com.app.lms.modules.admin_area.account.requests;
+package com.app.lms.security.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
