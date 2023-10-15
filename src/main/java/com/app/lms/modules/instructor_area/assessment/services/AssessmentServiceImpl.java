@@ -1,9 +1,7 @@
-package com.app.lms.modules.assessment.services;
+package com.app.lms.modules.instructor_area.assessment.services;
 
-import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
 @Service
-@Log4j
 public class AssessmentServiceImpl implements AssessmentService{
 }

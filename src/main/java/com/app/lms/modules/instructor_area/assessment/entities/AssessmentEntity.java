@@ -1,4 +1,4 @@
-package com.app.lms.modules.assessment.entities;
+package com.app.lms.modules.instructor_area.assessment.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

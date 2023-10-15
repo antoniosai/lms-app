@@ -1,4 +1,4 @@
-package com.app.lms.modules.assessment.repositories;
+package com.app.lms.modules.instructor_area.assessment.repositories;
 
 import org.springframework.stereotype.Repository;
 

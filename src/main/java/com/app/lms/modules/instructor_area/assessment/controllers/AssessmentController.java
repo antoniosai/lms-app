@@ -1,4 +1,4 @@
-package com.app.lms.modules.assessment.controllers;
+package com.app.lms.modules.instructor_area.assessment.controllers;
 
 public interface AssessmentController {
 }
