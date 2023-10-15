@@ -1,9 +1,7 @@
 package com.app.lms.modules.admin_area.account.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.app.lms.enums.AccountTypeEnum;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +20,13 @@ public class AccountEntity {
     @Column(name = "account_uuid", unique = true, nullable = false)
     private UUID accountUuid;
 
-    @Column(name = "account_username", unique = true, nullable = false)
+    @Column(name = "account_name", nullable = false, unique = true, length = 20)
     private String accountUsername;
+
+    @Column(name = "account_password", unique = true, nullable = false, length = 50)
+    private String accountPassword;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "account_type", nullable = false, length = 20)
+    private AccountTypeEnum accountType;
 }

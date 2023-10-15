@@ -1,10 +1,13 @@
 package com.app.lms.modules.admin_area.account.dtos;
 
+import com.app.lms.enums.AccountTypeEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Data
 @Builder
@@ -13,11 +16,12 @@ import lombok.NoArgsConstructor;
 public class AccountDTO {
 
     @JsonProperty("uuid")
-    private String accountUuid;
+    private UUID accountUuid;
 
-    @JsonProperty("fullName")
-    private String accountName;
+    @JsonProperty("username")
+    private String accountUsername;
 
-    @JsonProperty("userName")
-    private String userName;
+    @JsonProperty("type")
+    private AccountTypeEnum accountType;
+
 }
