@@ -21,12 +21,12 @@ public class AccountControllerImpl implements AccountController {
     private AccountService accountService;
     @Override
     @PutMapping(value = "/{userUuid}/{accountType}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<AccountDTO>> attachAccount(@Valid @RequestBody AccountDTO accountData, @PathVariable AccountTypeEnum accountType, @PathVariable UUID userUuid) throws NotFoundException {
+    public ResponseEntity<HttpResponseDTO<AccountDTO>> attachAccount(@Valid @RequestBody AccountDTO accountData, @PathVariable AccountTypeEnum accountType, @PathVariable UUID userUuid) throws Exception {
 
         return new HttpResponseDTO<>(accountService.attachAccount(accountData, accountType, userUuid), HttpStatus.CREATED)
                 .setResponseHeaders("accountData", accountData)
                 .setResponseHeaders("accountType", accountType)
-                .toResponse("Successfully Attac a Student By UUID from Server");
+                .toResponse("Successfully Attach a Student By UUID from Server");
     }
 
     @Override

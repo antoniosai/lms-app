@@ -9,4 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface AccountMainRepository extends JpaRepository<AccountEntity, UUID>, JpaSpecificationExecutor<AccountEntity> {
+    AccountEntity findByAccountUsername(String username);
 }

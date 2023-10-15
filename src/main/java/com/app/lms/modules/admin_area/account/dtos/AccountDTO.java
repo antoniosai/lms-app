@@ -24,4 +24,7 @@ public class AccountDTO {
     @JsonProperty("type")
     private AccountTypeEnum accountType;
 
+    @JsonProperty("password")
+    private String accountPassword;
+
 }
