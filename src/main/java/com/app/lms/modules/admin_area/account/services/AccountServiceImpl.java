@@ -44,16 +44,16 @@ public class AccountServiceImpl implements AccountService {
         boolean checkAccount = checkUserAccountIfExists(accountType, userUuid);
 
 
-        if(checkAccount) throw new Exception("Can't process because account already has a Account");
+        if (checkAccount) throw new Exception("Can't process because account already has a Account");
 
         AccountDTO account;
-        if(accountType == AccountTypeEnum.STUDENT) {
+        if (accountType == AccountTypeEnum.STUDENT) {
             accountData = createAccount(accountData, AccountTypeEnum.STUDENT);
             account = attachAccountToStudent(userUuid, accountData);
-        } else if(accountType == AccountTypeEnum.INSTRUCTOR) {
+        } else if (accountType == AccountTypeEnum.INSTRUCTOR) {
             accountData = createAccount(accountData, AccountTypeEnum.INSTRUCTOR);
             account = attachAccountToInstructor(userUuid, accountData);
-        } else if(accountType == AccountTypeEnum.ADMINISTRATOR) {
+        } else if (accountType == AccountTypeEnum.ADMINISTRATOR) {
             accountData = createAccount(accountData, AccountTypeEnum.ADMINISTRATOR);
             account = attachAccountToInstructor(userUuid, accountData);
         } else {
@@ -67,16 +67,16 @@ public class AccountServiceImpl implements AccountService {
     public void detachAccount(UUID accountUuid) throws NotFoundException {
         AccountDTO existingAccount = findAccountByUuid(accountUuid);
 
-        if(existingAccount.getAccountType() == AccountTypeEnum.STUDENT) {
+        if (existingAccount.getAccountType() == AccountTypeEnum.STUDENT) {
 
         }
 
-        if(existingAccount.getAccountType() == AccountTypeEnum.INSTRUCTOR) {
+        if (existingAccount.getAccountType() == AccountTypeEnum.INSTRUCTOR) {
 
         }
 
         // TODO: Create a process to delete Account UUID from Administrator
-        if(existingAccount.getAccountType() == AccountTypeEnum.ADMINISTRATOR) {
+        if (existingAccount.getAccountType() == AccountTypeEnum.ADMINISTRATOR) {
 
         }
     }
@@ -88,10 +88,15 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    @Override
+    public void deleteAccountByUsername(String username) {
+        accountMainRepository.deleteByAccountUsername(username);
+    }
+
     private AccountDTO findAccountByUuid(UUID accountUuid) throws NotFoundException {
         AccountEntity account = JpaResultHelperUtil.getSingleResultFromOptional(accountMainRepository.findById(accountUuid));
 
-        if(account == null) {
+        if (account == null) {
             throw new NotFoundException("Account is Not Found");
         }
 
@@ -116,11 +121,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private boolean checkUserAccountIfExists(AccountTypeEnum accountType, UUID userUuid) {
-        if(AccountTypeEnum.STUDENT == accountType) {
+        if (AccountTypeEnum.STUDENT == accountType) {
             return !studentService.findByAccountUuid(userUuid).isEmpty();
-        } else if(AccountTypeEnum.INSTRUCTOR == accountType) {
+        } else if (AccountTypeEnum.INSTRUCTOR == accountType) {
             return !instructorService.findByAccountUuid(userUuid).isEmpty();
-        } else if(AccountTypeEnum.ADMINISTRATOR == accountType) {
+        } else if (AccountTypeEnum.ADMINISTRATOR == accountType) {
             return !studentService.findByAccountUuid(userUuid).isEmpty();
         } else {
             return false;

@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Validated
 @RequestMapping(path = "/v1/admin-area/assessments")
-public class AssessmentControllerImpl implements AssessmentController{
+public class AssessmentControllerImpl implements AssessmentController {
 
 }

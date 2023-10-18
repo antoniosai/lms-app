@@ -12,8 +12,12 @@ import java.util.UUID;
 
 public interface InstructorController {
     ResponseEntity<HttpResponseDTO<PaginationUtil<InstructorEntity, InstructorDTO>>> getInstructorByPagination(int page, int perPage, GetInstructorRequest getInstructorRequest);
+
     ResponseEntity<HttpResponseDTO<InstructorDTO>> getInstructorById(UUID instructorUuid) throws NotFoundException;
+
     ResponseEntity<HttpResponseDTO<InstructorDTO>> createNewInstructor(InstructorDTO newInstructorData);
+
     ResponseEntity<HttpResponseDTO<InstructorDTO>> updateInstructorByUuid(UUID instructorUuid, InstructorDTO newInstructorData);
+
     ResponseEntity<HttpResponseDTO<String>> deleteInstructorByUuid(UUID instructorUuid) throws NotFoundException;
 }

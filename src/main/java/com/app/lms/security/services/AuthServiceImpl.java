@@ -32,14 +32,14 @@ public class AuthServiceImpl implements AuthService {
         log.info("Looking for User Account");
         AccountEntity account = accountMainRepository.findByAccountUsername(request.getUsername());
 
-        if(account == null) throw new NotFoundException("Account Not Found");
+        if (account == null) throw new NotFoundException("Account Not Found");
 
         String jwt = jwtService.generateToken(account);
 
         return JwtAuthenticationDTO
-            .builder()
-            .token(jwt)
-            .build();
+                .builder()
+                .token(jwt)
+                .build();
     }
 
     @Override

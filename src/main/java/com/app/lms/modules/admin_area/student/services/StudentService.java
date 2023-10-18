@@ -12,9 +12,16 @@ import java.util.UUID;
 public interface StudentService {
 
     PaginationUtil<StudentEntity, StudentDTO> getStudentByPagination(int page, int perPage, GetStudentRequest getStudentRequest);
+
     StudentDTO getStudentByUuid(UUID studentUuid) throws NotFoundException;
+
     StudentDTO createNewStudent(StudentDTO newStudentData);
+
     StudentDTO updateStudentByUuid(UUID studentUuid, StudentDTO newStudentData);
+
     List<StudentDTO> findByAccountUuid(UUID studentUuid);
+
     void deleteStudentByUuid(UUID studentUuid) throws NotFoundException;
+
+    void deleteStudentByIdentificationNUmber(String studentIdentificationNumber);
 }

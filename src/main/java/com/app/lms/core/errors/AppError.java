@@ -59,14 +59,14 @@ public class AppError {
     }
 
     public void addSubError(AppSubError error) {
-        if(errorsDetails == null) {
+        if (errorsDetails == null) {
             errorsDetails = new ArrayList<AppSubError>();
         }
         errorsDetails.add(error);
     }
 
     public void addAllSubError(List<AppSubError> errors) {
-        if(errorsDetails == null) {
+        if (errorsDetails == null) {
             errorsDetails = new ArrayList<AppSubError>();
         }
         errorsDetails.addAll(errors);

@@ -28,6 +28,7 @@ public class HttpResponseDTO<T> {
         this.headers.put("status", HttpStatus.OK);
         this.time = LocalDateTime.now();
     }
+
     public HttpResponseDTO(T _response, HttpStatus status) {
         this.response = _response;
         this.headers.put("status", status);

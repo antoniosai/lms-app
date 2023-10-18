@@ -1,13 +1,5 @@
 package com.app.lms.modules.admin_area.admin.controllers;
 
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.PaginationUtil;
@@ -16,8 +8,14 @@ import com.app.lms.modules.admin_area.admin.dtos.AdministratorDTO;
 import com.app.lms.modules.admin_area.admin.entities.AdminEntity;
 import com.app.lms.modules.admin_area.admin.requests.GetAdministratorRequest;
 import com.app.lms.modules.admin_area.admin.services.AdministratorService;
-
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/v1/admin-area/admins")

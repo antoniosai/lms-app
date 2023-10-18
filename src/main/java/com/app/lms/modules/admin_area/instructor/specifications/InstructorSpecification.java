@@ -15,7 +15,7 @@ public class InstructorSpecification {
 
     private static Specification<InstructorEntity> likeInstructorName(String studentName) {
 
-        if(studentName == null) return null;
+        if (studentName == null) return null;
 
         return (root, query, builder) ->
                 builder.like(root.get("studentName"), StringUtil.transformToKeyword(studentName));
@@ -23,7 +23,7 @@ public class InstructorSpecification {
 
     private static Specification<InstructorEntity> likeInstructorIdentificationNumber(String studentIdentificationNumber) {
 
-        if(studentIdentificationNumber == null) return null;
+        if (studentIdentificationNumber == null) return null;
 
         return (root, query, builder) ->
                 builder.like(root.get("studentIdentificationNumber"), StringUtil.transformToKeyword(studentIdentificationNumber));

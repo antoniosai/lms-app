@@ -12,9 +12,14 @@ import java.util.UUID;
 public interface AdministratorService {
 
     PaginationUtil<AdminEntity, AdministratorDTO> getAdminByPagination(int page, int perPage, GetAdministratorRequest getAdminRequest);
+
     AdministratorDTO getAdminByUuid(UUID adminUuid) throws NotFoundException;
+
     AdministratorDTO createNewAdmin(AdministratorDTO newAdminData);
+
     AdministratorDTO updateAdminByUuid(UUID adminUuid, AdministratorDTO newAdminData);
+
     List<AdministratorDTO> findByAccountUuid(UUID adminUuid);
+
     void deleteAdminByUuid(UUID adminUuid) throws NotFoundException;
 }

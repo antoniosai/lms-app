@@ -32,7 +32,7 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 
     StringUtil stringUtil = new StringUtil();
@@ -137,7 +137,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 
             Throwable cause = exception.getCause();
 
-            if(cause instanceof NotFoundException) {
+            if (cause instanceof NotFoundException) {
                 log.error("Data Not Found");
                 AppError appError = new AppError(HttpStatus.NOT_FOUND, exception.getMessage());
                 return new ResponseEntity(appError, appError.getHttpStatus());
@@ -165,9 +165,9 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
             }
         }
 
-        if(exception instanceof DataIntegrityViolationException) {
+        if (exception instanceof DataIntegrityViolationException) {
             String columnName = StringUtil.transformToCamelCase(extractConflictingValue((DataIntegrityViolationException) exception));
-            String errorMessage = "Conflict on: " +  columnName;
+            String errorMessage = "Conflict on: " + columnName;
             log.error(errorMessage);
             AppError appError = new AppError(HttpStatus.CONFLICT, errorMessage);
 

@@ -22,12 +22,12 @@ public class NotFoundException extends AppException {
         super(message, HttpStatus.NOT_FOUND);
     }
 
-    public NotFoundException(String message, List<AppSubError> details){
+    public NotFoundException(String message, List<AppSubError> details) {
         super(message, HttpStatus.NOT_FOUND);
         this.details = details;
     }
 
-    public NotFoundException(String message, AppSubError details){
+    public NotFoundException(String message, AppSubError details) {
         super(message, HttpStatus.NOT_FOUND);
         this.details.add(details);
     }

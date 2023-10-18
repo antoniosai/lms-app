@@ -24,6 +24,7 @@ public class AuthController {
     public ResponseEntity<JwtAuthenticationDTO> login(@RequestBody LoginRequest request) throws NotFoundException {
         return ResponseEntity.ok(authenticationService.login(request));
     }
+
     @PostMapping("/register")
     public ResponseEntity<JwtAuthenticationDTO> register(@RequestBody LoginRequest request) throws NotFoundException {
         return ResponseEntity.ok(authenticationService.register(request));

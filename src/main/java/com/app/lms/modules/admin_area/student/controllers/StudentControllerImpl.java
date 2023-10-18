@@ -13,21 +13,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/v1/admin-area/students")
-@PreAuthorize("hasAuthority('ADMINISTRATOR)")
 public class StudentControllerImpl implements StudentController {
 
     @Autowired
     private StudentService studentService;
 
     @Override
+    @Secured("STUDENT")
+//    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+//    @PreAuthorize("hasRole('STUDENT')")
+//    @PostAuthorize("returnObject.owner == authentication.principal.username")
     public ResponseEntity<HttpResponseDTO<PaginationUtil<StudentEntity, StudentDTO>>> getStudentByPagination(
             @RequestParam(defaultValue = "1") @IsNumeric int page,
             @RequestParam(defaultValue = "20") @IsNumeric int perPage,
@@ -41,6 +44,7 @@ public class StudentControllerImpl implements StudentController {
     }
 
     @Override
+    @Secured("ADMINISTRATOR")
     @GetMapping(value = "/{studentUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpResponseDTO<StudentDTO>> getStudentById(@PathVariable UUID studentUuid) throws NotFoundException {
         return new HttpResponseDTO<>(studentService.getStudentByUuid(studentUuid))

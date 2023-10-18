@@ -85,7 +85,7 @@ public class ObjectMapperUtil {
         return obj;
     }
 
-    public static<D> String jsonToString(D dto) throws JsonProcessingException {
+    public static <D> String jsonToString(D dto) throws JsonProcessingException {
         return objectMapper.writeValueAsString(dto);
     }
 }

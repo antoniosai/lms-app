@@ -81,7 +81,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     private AdministratorDTO findSingleAdminByUuid(UUID adminUuid) throws NotFoundException {
         AdminEntity admin = JpaResultHelperUtil.getSingleResultFromOptional(adminMainRepository.findById(adminUuid));
 
-        if(admin == null) {
+        if (admin == null) {
             log.info("Admin Not Found");
             throw new NotFoundException("Admin Not Found");
         }

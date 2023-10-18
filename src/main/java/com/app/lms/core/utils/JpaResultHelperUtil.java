@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@SuppressWarnings({ "rawtypes" })
+@SuppressWarnings({"rawtypes"})
 public class JpaResultHelperUtil {
     public static Object getSingleResultOrNull(Query query) {
         List results = query.getResultList();

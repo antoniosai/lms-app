@@ -16,7 +16,7 @@ public class StudentSpecification {
 
     private static Specification<StudentEntity> likeStudentEmail(String studentEmail) {
 
-        if(studentEmail == null) return null;
+        if (studentEmail == null) return null;
 
         return (root, query, builder) ->
                 builder.like(root.get("studentEmail"), StringUtil.transformToKeyword(studentEmail));
@@ -24,7 +24,7 @@ public class StudentSpecification {
 
     private static Specification<StudentEntity> likeStudentName(String studentName) {
 
-        if(studentName == null) return null;
+        if (studentName == null) return null;
 
         return (root, query, builder) ->
                 builder.like(root.get("studentName"), StringUtil.transformToKeyword(studentName));
@@ -32,7 +32,7 @@ public class StudentSpecification {
 
     private static Specification<StudentEntity> likeStudentIdentificationNumber(String studentIdentificationNumber) {
 
-        if(studentIdentificationNumber == null) return null;
+        if (studentIdentificationNumber == null) return null;
 
         return (root, query, builder) ->
                 builder.like(root.get("studentIdentificationNumber"), StringUtil.transformToKeyword(studentIdentificationNumber));

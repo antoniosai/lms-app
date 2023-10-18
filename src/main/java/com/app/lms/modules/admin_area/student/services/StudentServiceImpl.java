@@ -10,6 +10,7 @@ import com.app.lms.modules.admin_area.student.entities.StudentEntity;
 import com.app.lms.modules.admin_area.student.repositories.StudentMainRepository;
 import com.app.lms.modules.admin_area.student.requests.GetStudentRequest;
 import com.app.lms.modules.admin_area.student.specifications.StudentSpecification;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -78,10 +79,16 @@ public class StudentServiceImpl implements StudentService {
         studentMainRepository.deleteById(studentUuid);
     }
 
+    @Override
+    @Transactional
+    public void deleteStudentByIdentificationNUmber(String studentIdentificationNumber) {
+        studentMainRepository.deleteByStudentIdentificationNumber(studentIdentificationNumber);
+    }
+
     private StudentDTO findSingleStudentByUuid(UUID studentUuid) throws NotFoundException {
         StudentEntity student = JpaResultHelperUtil.getSingleResultFromOptional(studentMainRepository.findById(studentUuid));
 
-        if(student == null) {
+        if (student == null) {
             log.info("Student Not Found");
             throw new NotFoundException("Student Not Found");
         }

@@ -22,12 +22,12 @@ public class ParamsRequiredException extends AppException {
         super(message, HttpStatus.BAD_REQUEST);
     }
 
-    public ParamsRequiredException(String message, List<AppSubError> details){
+    public ParamsRequiredException(String message, List<AppSubError> details) {
         super(message, HttpStatus.BAD_REQUEST);
         this.details = details;
     }
 
-    public ParamsRequiredException(String message, AppSubError details){
+    public ParamsRequiredException(String message, AppSubError details) {
         super(message, HttpStatus.BAD_REQUEST);
         this.details.add(details);
     }

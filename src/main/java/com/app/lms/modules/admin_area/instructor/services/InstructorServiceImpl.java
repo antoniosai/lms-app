@@ -81,7 +81,7 @@ public class InstructorServiceImpl implements InstructorService {
     private InstructorDTO findSingleInstructorByUuid(UUID instructorUuid) throws NotFoundException {
         InstructorEntity instructor = JpaResultHelperUtil.getSingleResultFromOptional(instructorMainRepository.findById(instructorUuid));
 
-        if(instructor == null) {
+        if (instructor == null) {
             log.info("Instructor Not Found");
             throw new NotFoundException("Instructor Not Found");
         }

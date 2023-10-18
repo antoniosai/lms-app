@@ -18,6 +18,7 @@ import java.util.UUID;
 public class AccountControllerImpl implements AccountController {
     @Autowired
     private AccountService accountService;
+
     @Override
     @PutMapping(value = "/{userUuid}/{accountType}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpResponseDTO<AccountDTO>> attachAccount(@Valid @RequestBody AccountDTO accountData, @PathVariable AccountTypeEnum accountType, @PathVariable UUID userUuid) throws Exception {

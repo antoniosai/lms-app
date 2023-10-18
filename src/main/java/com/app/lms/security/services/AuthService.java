@@ -7,5 +7,6 @@ import com.app.lms.security.request.LoginRequest;
 public interface AuthService {
 
     JwtAuthenticationDTO login(LoginRequest request) throws NotFoundException;
+
     JwtAuthenticationDTO register(LoginRequest request) throws NotFoundException;
 }
