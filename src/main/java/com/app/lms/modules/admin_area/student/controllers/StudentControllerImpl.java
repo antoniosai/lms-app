@@ -4,7 +4,6 @@ import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.PaginationUtil;
 import com.app.lms.core.validations.IsNumeric;
-import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.admin_area.student.dtos.StudentDTO;
 import com.app.lms.modules.admin_area.student.entities.StudentEntity;
 import com.app.lms.modules.admin_area.student.requests.GetStudentRequest;
