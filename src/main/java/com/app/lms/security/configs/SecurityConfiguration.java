@@ -53,7 +53,7 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                                 .requestMatchers("/api/v1/auth/**").permitAll()
-//                        .requestMatchers("/v1/admin-area/**").hasAuthority("STUDENT")
+//                        .requestMatchers("/api/v1/administrator-area/**").hasAuthority("STUDENT")
 //                        .requestMatchers("/v1/instructor-area/**").hasAuthority(AccountTypeEnum.INSTRUCTOR.toString())
 //                        .requestMatchers("/v1/student-area/**").hasAuthority(AccountTypeEnum.STUDENT.toString())
                                 .anyRequest()

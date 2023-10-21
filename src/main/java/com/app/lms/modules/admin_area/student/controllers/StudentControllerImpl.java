@@ -4,6 +4,7 @@ import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.PaginationUtil;
 import com.app.lms.core.validations.IsNumeric;
+import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.admin_area.student.dtos.StudentDTO;
 import com.app.lms.modules.admin_area.student.entities.StudentEntity;
 import com.app.lms.modules.admin_area.student.requests.GetStudentRequest;
@@ -19,18 +20,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/v1/admin-area/students")
+@RequestMapping(path = "/api/v1/administrator-area/students")
+@Secured("ADMINISTRATOR")
 public class StudentControllerImpl implements StudentController {
 
     @Autowired
     private StudentService studentService;
 
     @Override
-    @Secured("STUDENT")
-//    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-//    @PreAuthorize("hasRole('STUDENT')")
-//    @PostAuthorize("returnObject.owner == authentication.principal.username")
     public ResponseEntity<HttpResponseDTO<PaginationUtil<StudentEntity, StudentDTO>>> getStudentByPagination(
             @RequestParam(defaultValue = "1") @IsNumeric int page,
             @RequestParam(defaultValue = "20") @IsNumeric int perPage,

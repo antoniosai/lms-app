@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/v1/admin-area/admins")
+@RequestMapping(path = "/api/v1/administrator-area/administrator")
 public class AdministratorControllerImpl implements AdministratorController {
     @Autowired
     private AdministratorService adminService;

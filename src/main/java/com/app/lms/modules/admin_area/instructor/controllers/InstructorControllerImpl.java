@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/v1/admin-area/instructors")
+@RequestMapping(path = "/api/v1/administrator-area/instructors")
 public class InstructorControllerImpl implements InstructorController {
     @Autowired
     private InstructorService instructorService;

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Validated
-@RequestMapping(path = "/v1/admin-area/assessments")
+@RequestMapping(path = "/api/v1/administrator-area/assessments")
 public class AssessmentControllerImpl implements AssessmentController {
 
 }

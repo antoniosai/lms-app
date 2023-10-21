@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/v1/admin-area/accounts")
+@RequestMapping(path = "/api/v1/administrator-area/accounts")
 public class AccountControllerImpl implements AccountController {
     @Autowired
     private AccountService accountService;
