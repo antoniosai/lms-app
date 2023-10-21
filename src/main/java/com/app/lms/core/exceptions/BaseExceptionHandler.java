@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -42,7 +43,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity handleNotFoundException(NotFoundException exception) {
         AppError appError = new AppError(exception.getHttpStatus(), exception.getMessage());
-        if (exception.getDetails().size() != 0) {
+        if (!exception.getDetails().isEmpty()) {
             appError.addAllSubError(exception.getDetails());
         } else {
             appError.addAllSubError(new ArrayList<>());
@@ -51,6 +52,15 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(appError, exception.getHttpStatus());
     }
 
+    @ResponseBody
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AccessDeniedException.class)
+    public final ResponseEntity<String> handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
+
+        AppError appError = new AppError(HttpStatus.FORBIDDEN, ex.getMessage());
+
+        return new ResponseEntity(appError, HttpStatus.FORBIDDEN);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
@@ -61,7 +71,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
                 .toList();
 
         AppError appError = new AppError(HttpStatus.BAD_REQUEST, "Ops!! Can't Process the Request");
-        if (ex.getFieldErrors().size() != 0) {
+        if (!ex.getFieldErrors().isEmpty()) {
             appError.addValidationErrors(errorList);
         } else {
             appError.addValidationErrors(new ArrayList<>());
@@ -75,7 +85,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ParamsRequiredException.class)
     protected ResponseEntity handleParamsRequiredException(ParamsRequiredException exception) {
         AppError appError = new AppError(exception.getHttpStatus(), exception.getMessage());
-        if (exception.getDetails().size() != 0) {
+        if (!exception.getDetails().isEmpty()) {
             appError.addAllSubError(exception.getDetails());
         } else {
             appError.addAllSubError(new ArrayList<>());
@@ -89,7 +99,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NoContentException.class)
     protected ResponseEntity handleNoContentException(NoContentException exception) {
         AppError appError = new AppError(exception.getHttpStatus(), exception.getMessage());
-        if (exception.getDetails().size() != 0) {
+        if (!exception.getDetails().isEmpty()) {
             appError.addAllSubError(exception.getDetails());
         } else {
             appError.addAllSubError(new ArrayList<>());
@@ -128,7 +138,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         if (exception instanceof NotFoundException) {
-            log.error("Notfound Exception caused here");
+            log.error("Not Found Exception caused here");
             AppError appError = new AppError(HttpStatus.NOT_FOUND, exception.getMessage());
             return new ResponseEntity(appError, appError.getHttpStatus());
         }
@@ -174,6 +184,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
             appError.addValidationError(null, columnName, null, errorMessage);
             return new ResponseEntity(appError, appError.getHttpStatus());
         }
+
 
         log.error("GENERAL Exception caused here: {}", exception.toString());
         AppError appError = new AppError(HttpStatus.BAD_REQUEST, exception.getMessage());
