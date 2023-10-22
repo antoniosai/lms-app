@@ -12,6 +12,6 @@ import java.util.UUID;
 
 @Repository
 public interface InstructorMainRepository extends JpaRepository<InstructorEntity, UUID>, JpaSpecificationExecutor<InstructorEntity> {
-    @Query("SELECT instructor FROM InstructorEntity instructor WHERE instructor.instructorUuid = :uuid AND instructor.instructorAccount IS NOT NULL")
+    @Query("SELECT instructor FROM InstructorEntity instructor WHERE instructor.instructorAccount.accountUuid = :uuid AND instructor.instructorAccount IS NOT NULL")
     List<InstructorEntity> findByAccountUuid(@Param("uuid") UUID uuid);
 }

@@ -12,6 +12,6 @@ import java.util.UUID;
 
 @Repository
 public interface AdministratorMainRepository extends JpaRepository<AdminEntity, UUID>, JpaSpecificationExecutor<AdminEntity> {
-    @Query("SELECT admin FROM AdminEntity admin WHERE admin.adminUuid = :uuid AND admin.adminAccount IS NOT NULL")
+    @Query("SELECT admin FROM AdminEntity admin WHERE admin.adminAccount.accountUuid = :uuid AND admin.adminAccount IS NOT NULL")
     List<AdminEntity> findByAccountUuid(@Param("uuid") UUID uuid);
 }

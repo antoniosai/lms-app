@@ -1,5 +1,8 @@
 package com.app.lms.security.configs;
 
+import com.app.lms.core.exceptions.AuthenticationEntryPointException;
+import com.app.lms.core.exceptions.ForbiddenException;
+import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.admin_area.account.services.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -51,13 +55,13 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request
-                                .requestMatchers("/api/v1/auth/**").permitAll()
-//                        .requestMatchers("/api/v1/administrator-area/**").hasAuthority("STUDENT")
-//                        .requestMatchers("/v1/instructor-area/**").hasAuthority(AccountTypeEnum.INSTRUCTOR.toString())
-//                        .requestMatchers("/v1/student-area/**").hasAuthority(AccountTypeEnum.STUDENT.toString())
+                .authorizeHttpRequests(request -> request.requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/auth/**")).permitAll()
+//                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/administrator-area/**")).hasRole(AccountTypeEnum.ADMINISTRATOR.toString())
+//                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/student-area/**")).hasRole(AccountTypeEnum.STUDENT.toString())
+//                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/instructor-area/**")).hasRole(AccountTypeEnum.INSTRUCTOR.toString())
                                 .anyRequest()
                                 .authenticated()
+
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())

@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Repository
 public interface StudentMainRepository extends JpaRepository<StudentEntity, UUID>, JpaSpecificationExecutor<StudentEntity> {
-    @Query("SELECT student FROM StudentEntity student WHERE student.studentUuid = :uuid AND student.studentAccount IS NOT NULL")
+    @Query("SELECT student FROM StudentEntity student WHERE student.studentAccount.accountUuid = :uuid AND student.studentAccount IS NOT NULL")
     List<StudentEntity> findByAccountUuid(@Param("uuid") UUID uuid);
 
     @Modifying

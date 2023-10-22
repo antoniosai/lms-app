@@ -21,5 +21,7 @@ public interface AdministratorService {
 
     List<AdministratorDTO> findByAccountUuid(UUID adminUuid);
 
+    AdministratorDTO findOneByAccountUuid(UUID adminUuid) throws NotFoundException;
+
     void deleteAdminByUuid(UUID adminUuid) throws NotFoundException;
 }

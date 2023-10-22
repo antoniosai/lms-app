@@ -3,6 +3,7 @@ package com.app.lms.core.exceptions;
 
 import com.app.lms.core.errors.AppError;
 import com.app.lms.core.utils.StringUtil;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,16 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
         AppError appError = new AppError(HttpStatus.FORBIDDEN, ex.getMessage());
 
         return new ResponseEntity(appError, HttpStatus.FORBIDDEN);
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(ExpiredJwtException.class)
+    public final ResponseEntity<String> handleJwtExpired(ExpiredJwtException ex, WebRequest request) {
+
+        AppError appError = new AppError(HttpStatus.UNAUTHORIZED, ex.getMessage());
+
+        return new ResponseEntity(appError, HttpStatus.UNAUTHORIZED);
     }
 
     @Override

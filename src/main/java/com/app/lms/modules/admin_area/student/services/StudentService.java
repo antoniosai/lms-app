@@ -19,7 +19,9 @@ public interface StudentService {
 
     StudentDTO updateStudentByUuid(UUID studentUuid, StudentDTO newStudentData);
 
-    List<StudentDTO> findByAccountUuid(UUID studentUuid);
+    List<StudentDTO> findByAccountUuid(UUID accountUuid);
+
+    StudentDTO findOneByAccountUuid(UUID accountUuid) throws NotFoundException;
 
     void deleteStudentByUuid(UUID studentUuid) throws NotFoundException;
 

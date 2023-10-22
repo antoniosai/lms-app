@@ -69,6 +69,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public StudentDTO findOneByAccountUuid(UUID accountUuid) throws NotFoundException {
+        List<StudentDTO> students = this.findByAccountUuid(accountUuid);
+
+        if(students.isEmpty()) {
+            throw new NotFoundException("No Student Found");
+        }
+
+        return students.get(0);
+    }
+
+    @Override
     public void deleteStudentByUuid(UUID studentUuid) throws NotFoundException {
         log.info("Deleting Student with UUID => " + studentUuid);
 

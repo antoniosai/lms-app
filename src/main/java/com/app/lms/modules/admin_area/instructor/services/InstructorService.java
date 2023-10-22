@@ -21,5 +21,7 @@ public interface InstructorService {
 
     List<InstructorDTO> findByAccountUuid(UUID instructorUuid);
 
+    InstructorDTO findOneByAccountUuid(UUID instructorUuid) throws NotFoundException;
+
     void deleteInstructorByUuid(UUID instructorUuid) throws NotFoundException;
 }

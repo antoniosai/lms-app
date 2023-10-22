@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -61,6 +62,24 @@ public class AccountServiceImpl implements AccountService {
         }
 
         return account;
+    }
+
+    @Override
+    public AccountDTO findOneAccountByAccountUsername(String username) throws NotFoundException {
+        List<AccountDTO> accounts = this.findAccountsByAccountUsername(username);
+
+        if(accounts.isEmpty()) {
+            throw new NotFoundException("Account Not Found");
+        }
+
+        return accounts.get(0);
+    }
+
+    @Override
+    public List<AccountDTO> findAccountsByAccountUsername(String username) {
+        List<AccountEntity> accountEntities = accountMainRepository.findAccountByUsername(username);
+
+        return ObjectMapperUtil.mapAll(accountEntities, AccountDTO.class);
     }
 
     @Override

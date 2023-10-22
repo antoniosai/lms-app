@@ -64,7 +64,19 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public List<AdministratorDTO> findByAccountUuid(UUID adminUuid) {
+        log.info("TEST | Looking for Admin => " + adminUuid);
         return ObjectMapperUtil.mapAll(adminMainRepository.findByAccountUuid(adminUuid), AdministratorDTO.class);
+    }
+
+    @Override
+    public AdministratorDTO findOneByAccountUuid(UUID adminUuid) throws NotFoundException {
+        List<AdministratorDTO> administrators = findByAccountUuid(adminUuid);
+
+        if(administrators.isEmpty()) {
+            throw new NotFoundException("Administrator Not Found");
+        }
+
+        return administrators.get(0);
     }
 
     @Override

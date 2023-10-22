@@ -68,6 +68,17 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
+    public InstructorDTO findOneByAccountUuid(UUID instructorUuid) throws NotFoundException {
+        List<InstructorDTO> instructors = findByAccountUuid(instructorUuid);
+
+        if(instructors.isEmpty()) {
+            throw new NotFoundException("Instructor Not Found");
+        }
+
+        return instructors.get(0);
+    }
+
+    @Override
     public void deleteInstructorByUuid(UUID instructorUuid) throws NotFoundException {
         log.info("Deleting Instructor with UUID => " + instructorUuid);
 
