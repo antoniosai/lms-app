@@ -72,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
     public StudentDTO findOneByAccountUuid(UUID accountUuid) throws NotFoundException {
         List<StudentDTO> students = this.findByAccountUuid(accountUuid);
 
-        if(students.isEmpty()) {
+        if (students.isEmpty()) {
             throw new NotFoundException("No Student Found");
         }
 

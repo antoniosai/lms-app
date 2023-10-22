@@ -43,11 +43,11 @@ public class ProfileControllerImpl {
 
         AccountDTO account = ObjectMapperUtil.map(userDetails, AccountDTO.class);
 
-        if(account.getAccountType() == AccountTypeEnum.STUDENT) {
+        if (account.getAccountType() == AccountTypeEnum.STUDENT) {
             profileService.updateProfile(account.getAccountUsername(), multipleProfile.getStudent());
-        } else if(account.getAccountType() == AccountTypeEnum.INSTRUCTOR) {
+        } else if (account.getAccountType() == AccountTypeEnum.INSTRUCTOR) {
             profileService.updateProfile(account.getAccountUsername(), multipleProfile.getInstructor());
-        } else if(account.getAccountType() == AccountTypeEnum.ADMINISTRATOR) {
+        } else if (account.getAccountType() == AccountTypeEnum.ADMINISTRATOR) {
             profileService.updateProfile(account.getAccountUsername(), multipleProfile.getAdministrator());
         }
 

@@ -71,7 +71,7 @@ public class InstructorServiceImpl implements InstructorService {
     public InstructorDTO findOneByAccountUuid(UUID instructorUuid) throws NotFoundException {
         List<InstructorDTO> instructors = findByAccountUuid(instructorUuid);
 
-        if(instructors.isEmpty()) {
+        if (instructors.isEmpty()) {
             throw new NotFoundException("Instructor Not Found");
         }
 

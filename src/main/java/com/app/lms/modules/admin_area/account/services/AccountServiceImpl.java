@@ -68,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountDTO findOneAccountByAccountUsername(String username) throws NotFoundException {
         List<AccountDTO> accounts = this.findAccountsByAccountUsername(username);
 
-        if(accounts.isEmpty()) {
+        if (accounts.isEmpty()) {
             throw new NotFoundException("Account Not Found");
         }
 

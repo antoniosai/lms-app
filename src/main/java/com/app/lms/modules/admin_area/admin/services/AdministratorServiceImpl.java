@@ -72,7 +72,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     public AdministratorDTO findOneByAccountUuid(UUID adminUuid) throws NotFoundException {
         List<AdministratorDTO> administrators = findByAccountUuid(adminUuid);
 
-        if(administrators.isEmpty()) {
+        if (administrators.isEmpty()) {
             throw new NotFoundException("Administrator Not Found");
         }
 

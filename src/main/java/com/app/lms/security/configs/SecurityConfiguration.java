@@ -1,8 +1,5 @@
 package com.app.lms.security.configs;
 
-import com.app.lms.core.exceptions.AuthenticationEntryPointException;
-import com.app.lms.core.exceptions.ForbiddenException;
-import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.admin_area.account.services.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

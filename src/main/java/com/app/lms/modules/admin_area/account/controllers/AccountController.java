@@ -3,7 +3,6 @@ package com.app.lms.modules.admin_area.account.controllers;
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.admin_area.account.dtos.AccountDTO;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 
 import java.util.UUID;

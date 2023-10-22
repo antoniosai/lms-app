@@ -1,7 +1,6 @@
 package com.app.lms.modules.profile.services;
 
 import com.app.lms.core.exceptions.NotFoundException;
-import com.app.lms.core.utils.ObjectMapperUtil;
 import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.admin_area.account.dtos.AccountDTO;
 import com.app.lms.modules.admin_area.account.services.AccountService;
@@ -15,8 +14,6 @@ import com.app.lms.modules.profile.dtos.ProfileDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -67,14 +64,14 @@ public class ProfileServiceImpl implements ProfileService {
             profile.setProfile(getAdministratorProfile(username));
 
             return profile;
-        } else if(account.getAccountType() == AccountTypeEnum.INSTRUCTOR) {
+        } else if (account.getAccountType() == AccountTypeEnum.INSTRUCTOR) {
             ProfileDTO<InstructorDTO> profile = new ProfileDTO<>();
             profile.setAccount(account);
             profile.setProfile(getInstructorProfile(username));
 
             return profile;
 
-        } else if(account.getAccountType() == AccountTypeEnum.STUDENT) {
+        } else if (account.getAccountType() == AccountTypeEnum.STUDENT) {
             ProfileDTO<StudentDTO> profile = new ProfileDTO<>();
             profile.setAccount(account);
             profile.setProfile(getStudentProfile(username));
