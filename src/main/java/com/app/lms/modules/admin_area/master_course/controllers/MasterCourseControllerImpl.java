@@ -32,8 +32,7 @@ public class MasterCourseControllerImpl implements MasterCourseController {
     public ResponseEntity<HttpResponseDTO<PaginationUtil<MasterCourseEntity, MasterCourseDTO>>> getCourseByPagination(
             @RequestParam(defaultValue = "1") @IsNumeric int page,
             @RequestParam(defaultValue = "20") @IsNumeric int perPage,
-            GetMasterCourseRequest getMasterCourseRequest)
-    {
+            GetMasterCourseRequest getMasterCourseRequest) {
         return new HttpResponseDTO<>(masterCourseService.getCourseByPagination(page, perPage, getMasterCourseRequest))
                 .setResponseHeaders("getMasterCourseRequest", getMasterCourseRequest)
                 .setResponseHeaders("page", page)

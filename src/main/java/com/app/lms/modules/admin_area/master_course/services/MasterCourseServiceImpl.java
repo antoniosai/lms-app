@@ -37,7 +37,7 @@ public class MasterCourseServiceImpl implements MasterCourseService {
     public MasterCourseDTO getCourseByUuid(UUID courseUuid) throws NotFoundException {
         MasterCourseDTO course = findSingleCourseByUuid(courseUuid);
 
-        if(course == null) {
+        if (course == null) {
             throw new NotFoundException("Course Not Found");
         }
 
