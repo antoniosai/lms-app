@@ -52,7 +52,6 @@ public class StudentControllerImpl implements StudentController {
     @Override
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpResponseDTO<StudentDTO>> createNewStudent(@Valid @RequestBody StudentDTO newStudentData) {
-        System.out.println("studentData => " + newStudentData);
         return new HttpResponseDTO<>(studentService.createNewStudent(newStudentData), HttpStatus.CREATED)
                 .setResponseHeaders("newStudentData", newStudentData)
                 .toResponse("Successfully Created a Student");

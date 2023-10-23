@@ -23,4 +23,17 @@ public class StringUtil {
         return "%" + s + "%";
     }
 
+
+    public static String createSlug(String s) {
+        String slug = s.toLowerCase().replaceAll(" ", "-");
+
+        // Remove any non-alphanumeric characters and consecutive hyphens
+        slug = slug.replaceAll("[^a-z0-9-]+", "-").replaceAll("-{2,}", "-");
+
+        // Trim leading and trailing hyphens
+        slug = slug.replaceAll("^-|-$", "");
+
+        return slug;
+    }
+
 }
