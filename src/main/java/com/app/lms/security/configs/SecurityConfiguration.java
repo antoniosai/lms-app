@@ -4,6 +4,7 @@ import com.app.lms.modules.admin_area.account.services.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -19,6 +20,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -56,13 +58,13 @@ public class SecurityConfiguration {
 //                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/administrator-area/**")).hasRole(AccountTypeEnum.ADMINISTRATOR.toString())
 //                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/student-area/**")).hasRole(AccountTypeEnum.STUDENT.toString())
 //                                .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/instructor-area/**")).hasRole(AccountTypeEnum.INSTRUCTOR.toString())
-                                .anyRequest()
-                                .authenticated()
+                                .anyRequest().permitAll()
 
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling((exception) -> exception.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
         return http.build();
     }
 
