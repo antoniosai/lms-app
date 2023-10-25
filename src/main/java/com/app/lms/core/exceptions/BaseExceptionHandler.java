@@ -63,9 +63,14 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(appError, HttpStatus.FORBIDDEN);
     }
 
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<String> handleExpiredJwtException(ExpiredJwtException ex) {
-        return new ResponseEntity<>("JWT has expired", HttpStatus.UNAUTHORIZED);
+    public final ResponseEntity<String> handleExpiredJwtException(ExpiredJwtException ex, WebRequest request) {
+
+        AppError appError = new AppError(HttpStatus.UNAUTHORIZED, ex.getMessage());
+
+        return new ResponseEntity(appError, HttpStatus.UNAUTHORIZED);
     }
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
