@@ -37,8 +37,6 @@ import java.util.concurrent.ExecutionException;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 
-    StringUtil stringUtil = new StringUtil();
-
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
