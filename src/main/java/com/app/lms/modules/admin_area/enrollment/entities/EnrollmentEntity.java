@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "m_enrollments",  uniqueConstraints = @UniqueConstraint(columnNames = {"enrollment_course_id", "enrollment_student_id"}))
+@Table(name = "m_enrollments", uniqueConstraints = @UniqueConstraint(columnNames = {"enrollment_course_id", "enrollment_student_id"}))
 public class EnrollmentEntity implements Serializable {
     @Id
     @Column(name = "enrollment_uuid", nullable = false, insertable = false)
@@ -34,7 +34,7 @@ public class EnrollmentEntity implements Serializable {
     @Column(name = "enrollment_date", nullable = false)
     private Date enrollmentDate;
 
-    @Column(name = "enrollment_is_active", nullable = false  )
+    @Column(name = "enrollment_is_active", nullable = false)
     private Boolean enrollmentIsActive;
 
 }

@@ -72,6 +72,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity(appError, HttpStatus.UNAUTHORIZED);
     }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         List<FieldError> errorList = ex

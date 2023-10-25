@@ -2,12 +2,10 @@ package com.app.lms.security.configs;
 
 import com.app.lms.modules.admin_area.account.services.AccountService;
 import com.app.lms.security.handlers.AuthEntryPointJwt;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -23,16 +21,13 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -70,12 +65,12 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                    .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/auth/**"))
-                    .permitAll()
-                    // .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/administrator-area/**")).hasRole(AccountTypeEnum.ADMINISTRATOR.toString())
-                    // .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/student-area/**")).hasRole(AccountTypeEnum.STUDENT.toString())
-                    // .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/instructor-area/**")).hasRole(AccountTypeEnum.INSTRUCTOR.toString())
-                    .anyRequest().permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/auth/**"))
+                        .permitAll()
+                        // .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/administrator-area/**")).hasRole(AccountTypeEnum.ADMINISTRATOR.toString())
+                        // .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/student-area/**")).hasRole(AccountTypeEnum.STUDENT.toString())
+                        // .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/instructor-area/**")).hasRole(AccountTypeEnum.INSTRUCTOR.toString())
+                        .anyRequest().permitAll()
 
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
@@ -102,12 +97,12 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
-        configuration.setAllowedMethods(List.of("GET","POST"));
-        configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
+        configuration.setAllowedMethods(List.of("GET", "POST"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-        source.registerCorsConfiguration("/**",configuration);
+        source.registerCorsConfiguration("/**", configuration);
 
         return source;
     }
