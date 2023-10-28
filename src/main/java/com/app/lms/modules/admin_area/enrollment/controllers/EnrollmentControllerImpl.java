@@ -5,14 +5,12 @@ import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.modules.admin_area.enrollment.services.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/administrator-area/enrollments")
-@Secured("ADMINISTRATOR")
 public class EnrollmentControllerImpl implements EnrollmentController {
 
     @Autowired

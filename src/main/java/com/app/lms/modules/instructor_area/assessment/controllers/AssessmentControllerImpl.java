@@ -1,13 +1,13 @@
 package com.app.lms.modules.instructor_area.assessment.controllers;
 
-import org.springframework.validation.annotation.Validated;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@RestController
-@Validated
-@RequestMapping(path = "/api/v1/administrator-area/assessments")
+@RestController(value = "instructorAssessmentController")
+@RequestMapping(path = "/api/v1/instructor-area/assessments")
+@PreAuthorize("hasRole('INSTRUCTOR')")
 public class AssessmentControllerImpl implements AssessmentController {
 
 }

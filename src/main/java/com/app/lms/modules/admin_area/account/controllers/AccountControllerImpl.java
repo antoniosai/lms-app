@@ -9,14 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/v1/administrator-area/accounts")
-@Secured("ADMINISTRATOR")
 public class AccountControllerImpl implements AccountController {
     @Autowired
     private AccountService accountService;

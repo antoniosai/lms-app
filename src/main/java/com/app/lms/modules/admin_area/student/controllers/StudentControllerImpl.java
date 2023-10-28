@@ -13,14 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/v1/administrator-area/students")
-@Secured("ADMINISTRATOR")
 public class StudentControllerImpl implements StudentController {
 
     @Autowired
@@ -41,7 +39,6 @@ public class StudentControllerImpl implements StudentController {
     }
 
     @Override
-    @Secured("ADMINISTRATOR")
     @GetMapping(value = "/{studentUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpResponseDTO<StudentDTO>> getStudentById(@PathVariable UUID studentUuid) throws NotFoundException {
         return new HttpResponseDTO<>(studentService.getStudentByUuid(studentUuid))

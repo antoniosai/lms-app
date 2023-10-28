@@ -21,7 +21,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/v1/administrator-area/courses")
-@Secured("ADMINISTRATOR")
 public class MasterCourseControllerImpl implements MasterCourseController {
 
     @Autowired

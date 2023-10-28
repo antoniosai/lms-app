@@ -10,7 +10,6 @@ import com.app.lms.modules.profile.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1/profile")
-@Secured({"STUDENT", "ADMINISTRATOR", "INSTRUCTOR"})
 public class ProfileControllerImpl {
 
     @Autowired

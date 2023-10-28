@@ -1,15 +1,12 @@
 package com.app.lms.security.configs;
 
+import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.admin_area.account.services.AccountService;
 import com.app.lms.security.handlers.AuthEntryPointJwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
-import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -34,31 +31,13 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AccountService accountService;
 
-
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
-
-    @Bean
-    static RoleHierarchy roleHierarchy() {
-        RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
-        hierarchy.setHierarchy("ADMINISTRATOR > INSTRUCTOR > STUDENT");
-
-        return hierarchy;
-    }
-
-    @Bean
-    static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
-
-        DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
-        expressionHandler.setRoleHierarchy(roleHierarchy);
-        return expressionHandler;
-    }
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -67,9 +46,10 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/auth/**"))
                         .permitAll()
-                        // .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/administrator-area/**")).hasRole(AccountTypeEnum.ADMINISTRATOR.toString())
-                        // .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/student-area/**")).hasRole(AccountTypeEnum.STUDENT.toString())
-                        // .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/instructor-area/**")).hasRole(AccountTypeEnum.INSTRUCTOR.toString())
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/profile/**")).hasAnyAuthority(AccountTypeEnum.ADMINISTRATOR.toString(), AccountTypeEnum.INSTRUCTOR.toString(), AccountTypeEnum.STUDENT.toString())
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/administrator-area/**")).hasAuthority(AccountTypeEnum.ADMINISTRATOR.toString())
+                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/student-area/**")).hasAuthority(AccountTypeEnum.STUDENT.toString())
+                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/instructor-area/**")).hasAuthority(AccountTypeEnum.INSTRUCTOR.toString())
                         .anyRequest().permitAll()
 
                 )

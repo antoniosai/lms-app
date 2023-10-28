@@ -1,0 +1,1 @@
+docker-compose up -d lms-db && sh build.sh
