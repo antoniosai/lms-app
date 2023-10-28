@@ -1,31 +1,3 @@
-server:
-  port: 8000
 spring:
-  application:
-    name: composite-tms-service
-    version: 1.0.0
-  datasource:
-    driverClassName: org.postgresql.Driver
-    hikari:
-      idle-timeout: 5000
-      max-lifetime: 10000
-      maximum-pool-size: 10
-      minimum-idle: 3
-    initialization-mode: always
-    password: lms_str0ngp4ssr0d
-    platform: postgres
-    url: jdbc:postgresql://localhost:5555/lms_db
-    username: lms_user
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: false
-    show-sql: true
-  output:
-    ansi:
-      enabled: ALWAYS
-token:
-  signing:
-    key: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351
+  profiles:
+    active: dev
