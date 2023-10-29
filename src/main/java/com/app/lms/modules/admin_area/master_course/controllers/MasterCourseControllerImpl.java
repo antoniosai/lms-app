@@ -57,7 +57,7 @@ public class MasterCourseControllerImpl implements MasterCourseController {
 
     @Override
     @PutMapping(value = "/{courseUuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<MasterCourseDTO>> updateCourseByUuid(@PathVariable UUID courseUuid, @Valid @RequestBody MasterCourseDTO newCourseData) {
+    public ResponseEntity<HttpResponseDTO<MasterCourseDTO>> updateCourseByUuid(@PathVariable UUID courseUuid, @Valid @RequestBody MasterCourseDTO newCourseData) throws NotFoundException {
         return new HttpResponseDTO<>(masterCourseService.updateCourseByUuid(courseUuid, newCourseData))
                 .setResponseHeaders("newCourseData", newCourseData)
                 .toResponse("Updated Course by UUID");

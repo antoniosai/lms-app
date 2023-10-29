@@ -13,8 +13,10 @@ import com.app.lms.modules.admin_area.student.services.StudentService;
 import com.app.lms.modules.profile.dtos.ProfileDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+@Primary
 @Service
 @Slf4j
 public class ProfileServiceImpl implements ProfileService {
@@ -31,26 +33,26 @@ public class ProfileServiceImpl implements ProfileService {
     @Autowired
     private AdministratorService administratorService;
 
-    private StudentDTO getStudentProfile(String username) throws NotFoundException {
+    protected StudentDTO getStudentProfile(String username) throws NotFoundException {
 
         AccountDTO account = findAccountByUsername(username);
         return studentService.findOneByAccountUuid(account.getAccountUuid());
     }
 
-    private InstructorDTO getInstructorProfile(String username) throws NotFoundException {
+    protected InstructorDTO getInstructorProfile(String username) throws NotFoundException {
 
         AccountDTO account = findAccountByUsername(username);
         return instructorService.findOneByAccountUuid(account.getAccountUuid());
     }
 
-    private AdministratorDTO getAdministratorProfile(String username) throws NotFoundException {
+    protected AdministratorDTO getAdministratorProfile(String username) throws NotFoundException {
 
         AccountDTO account = findAccountByUsername(username);
         return administratorService.findOneByAccountUuid(account.getAccountUuid());
 
     }
 
-    private AccountDTO findAccountByUsername(String username) throws NotFoundException {
+    protected AccountDTO findAccountByUsername(String username) throws NotFoundException {
         return accountService.findOneAccountByAccountUsername(username);
     }
 

@@ -18,7 +18,7 @@ public interface MasterCourseController {
 
     ResponseEntity<HttpResponseDTO<MasterCourseDTO>> createNewCourse(MasterCourseDTO newCourseData);
 
-    ResponseEntity<HttpResponseDTO<MasterCourseDTO>> updateCourseByUuid(UUID courseUuid, MasterCourseDTO newCourseData);
+    ResponseEntity<HttpResponseDTO<MasterCourseDTO>> updateCourseByUuid(UUID courseUuid, MasterCourseDTO newCourseData) throws NotFoundException;
 
     ResponseEntity<HttpResponseDTO<MasterCourseDTO>> attachToInstructor(UUID courseUuid, InstructorDTO instructor) throws NotFoundException;
 

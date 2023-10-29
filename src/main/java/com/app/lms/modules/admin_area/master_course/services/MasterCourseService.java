@@ -21,7 +21,9 @@ public interface MasterCourseService {
 
     MasterCourseDTO createNewCourse(MasterCourseDTO newCourseData);
 
-    MasterCourseDTO updateCourseByUuid(UUID courseUuid, MasterCourseDTO newCourseData);
+    MasterCourseDTO updateCourseByUuid(UUID courseUuid, MasterCourseDTO newCourseData) throws NotFoundException;
+
+    MasterCourseDTO findSingleCourseByUuid(UUID instructorUuid) throws NotFoundException;
 
     void deleteCourseByUuid(UUID courseUuid);
 }

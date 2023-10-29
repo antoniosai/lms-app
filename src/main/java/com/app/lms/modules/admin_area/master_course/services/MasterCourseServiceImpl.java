@@ -8,7 +8,6 @@ import com.app.lms.modules.admin_area.master_course.entities.MasterCourseEntity;
 import com.app.lms.modules.admin_area.master_course.repositories.MasterCourseMainRepository;
 import com.app.lms.modules.admin_area.master_course.requests.GetMasterCourseRequest;
 import com.app.lms.modules.admin_area.master_course.specifications.MasterCourseSpecification;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-@Slf4j
 public class MasterCourseServiceImpl implements MasterCourseService {
 
     @Autowired
@@ -77,8 +75,16 @@ public class MasterCourseServiceImpl implements MasterCourseService {
     }
 
     @Override
-    public MasterCourseDTO updateCourseByUuid(UUID courseUuid, MasterCourseDTO newCourseData) {
-        return null;
+    public MasterCourseDTO updateCourseByUuid(UUID courseUuid, MasterCourseDTO newCourseData) throws NotFoundException {
+
+        MasterCourseDTO course = findSingleCourseByUuid(courseUuid);
+        course.setCourseName(newCourseData.getCourseName());
+        course.setCourseUuid(courseUuid);
+        course.setCourseSlug(StringUtil.createSlug(newCourseData.getCourseName()));
+
+        MasterCourseEntity updatedStudent = masterCourseMainRepository.save(ObjectMapperUtil.map(course, MasterCourseEntity.class));
+
+        return ObjectMapperUtil.map(updatedStudent, MasterCourseDTO.class);
     }
 
     @Override
@@ -86,11 +92,11 @@ public class MasterCourseServiceImpl implements MasterCourseService {
         masterCourseMainRepository.deleteById(courseUuid);
     }
 
-    private MasterCourseDTO findSingleCourseByUuid(UUID instructorUuid) throws NotFoundException {
+    @Override
+    public MasterCourseDTO findSingleCourseByUuid(UUID instructorUuid) throws NotFoundException {
         MasterCourseEntity instructor = JpaResultHelperUtil.getSingleResultFromOptional(masterCourseMainRepository.findById(instructorUuid));
 
         if (instructor == null) {
-            log.info("Course Not Found");
             throw new NotFoundException("Course Not Found");
         }
 

@@ -29,6 +29,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
@@ -66,9 +67,19 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ExpiredJwtException.class)
     public final ResponseEntity<String> handleExpiredJwtException(ExpiredJwtException ex, WebRequest request) {
 
-        AppError appError = new AppError(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        AppError appError = new AppError(HttpStatus.UNAUTHORIZED, "You Are Unauthorized. " + ex.getMessage());
 
         return new ResponseEntity(appError, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(ForbiddenException.class)
+    public final ResponseEntity<String> handleForbiddenException(ForbiddenException ex, WebRequest request) {
+
+        AppError appError = new AppError(HttpStatus.FORBIDDEN, ex.getMessage());
+
+        return new ResponseEntity(appError, HttpStatus.FORBIDDEN);
     }
 
     @Override
@@ -122,14 +133,15 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
         handleAppException(ex);
     }
 
-    private AppException handleAppException(Exception exception) {
+    private void handleAppException(Exception exception) {
         if (exception instanceof AppException) {
-            return (AppException) exception;
+            return;
         } else if (exception instanceof IllegalArgumentException) {
-            return new AppException(exception.getMessage(), HttpStatus.BAD_REQUEST);
+            new AppException(exception.getMessage(), HttpStatus.BAD_REQUEST);
+            return;
         }
 
-        return new AppException(exception.getMessage(), exception, HttpStatus.NO_CONTENT);
+        new AppException(exception.getMessage(), exception, HttpStatus.NO_CONTENT);
     }
 
     @ExceptionHandler(Exception.class)
@@ -203,8 +215,8 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
     /**
      * Handle @Validated annotations
      *
-     * @param exception
-     * @return
+     * @param exception ConstraintViolationException
+     * @return ResponseEntity
      */
     @ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity handleConstraintValidation(ConstraintViolationException exception) {
@@ -216,15 +228,15 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
     /**
      * Handle miss match data type
      *
-     * @param ex
-     * @param request
-     * @return
+     * @param ex exception
+     * @param request WebRequest
+     * @return exception
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    protected ResponseEntity handleMethodArgumentMissmatch(MethodArgumentTypeMismatchException ex, WebRequest request) {
+    protected ResponseEntity handleMethodArgumentMismatch(MethodArgumentTypeMismatchException ex, WebRequest request) {
         log.error(request.getParameterMap().toString());
         String _message = String.format("Parameter '%s' with value '%s', should be type of %s", ex.getName(),
-                ex.getValue(), ex.getRequiredType().getSimpleName());
+                ex.getValue(), Objects.requireNonNull(ex.getRequiredType()).getSimpleName());
         AppError appError = new AppError(HttpStatus.BAD_REQUEST, _message);
         return new ResponseEntity(appError, HttpStatus.BAD_REQUEST);
     }
