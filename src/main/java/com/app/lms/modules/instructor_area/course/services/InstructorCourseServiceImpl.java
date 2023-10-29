@@ -37,7 +37,7 @@ public class InstructorCourseServiceImpl implements InstructorCourseService {
     public MasterCourseDTO getCourseByUuid(UUID courseUuid) throws NotFoundException, ForbiddenException {
         MasterCourseDTO course = masterCourseService.getCourseByUuid(courseUuid);
 
-        if(!Objects.equals(course.getCourseInstructor().getInstructorUuid(), getCurrentInstructor().getInstructorUuid())) {
+        if (!Objects.equals(course.getCourseInstructor().getInstructorUuid(), getCurrentInstructor().getInstructorUuid())) {
             throw new ForbiddenException("You are not Allowed to Edit This Course");
         }
 
@@ -49,7 +49,7 @@ public class InstructorCourseServiceImpl implements InstructorCourseService {
 
         MasterCourseDTO course = masterCourseService.getCourseByUuid(courseUuid);
 
-        if(!Objects.equals(course.getCourseInstructor().getInstructorUuid(), getCurrentInstructor().getInstructorUuid())) {
+        if (!Objects.equals(course.getCourseInstructor().getInstructorUuid(), getCurrentInstructor().getInstructorUuid())) {
             throw new ForbiddenException("You are not Allowed to Access This Course");
         }
 

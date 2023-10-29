@@ -48,8 +48,8 @@ public class SecurityConfiguration {
                         .permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/profile/**")).hasAnyAuthority(AccountTypeEnum.ADMINISTRATOR.toString(), AccountTypeEnum.INSTRUCTOR.toString(), AccountTypeEnum.STUDENT.toString())
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/administrator-area/**")).hasAuthority(AccountTypeEnum.ADMINISTRATOR.toString())
-                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/student-area/**")).hasAuthority(AccountTypeEnum.STUDENT.toString())
-                         .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/instructor-area/**")).hasAuthority(AccountTypeEnum.INSTRUCTOR.toString())
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/student-area/**")).hasAuthority(AccountTypeEnum.STUDENT.toString())
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/v1/instructor-area/**")).hasAuthority(AccountTypeEnum.INSTRUCTOR.toString())
                         .anyRequest().permitAll()
 
                 )

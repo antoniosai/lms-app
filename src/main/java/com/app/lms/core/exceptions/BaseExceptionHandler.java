@@ -228,7 +228,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
     /**
      * Handle miss match data type
      *
-     * @param ex exception
+     * @param ex      exception
      * @param request WebRequest
      * @return exception
      */
