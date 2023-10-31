@@ -16,7 +16,6 @@ public class EnrollmentControllerImpl implements EnrollmentController {
     @Autowired
     private EnrollmentService enrollmentService;
 
-
     @Override
     @PutMapping("/course/{courseUuid}/student/{studentUuid}")
     public ResponseEntity<HttpResponseDTO<String>> addStudentEnrollment(@PathVariable UUID courseUuid, @PathVariable UUID studentUuid) throws NotFoundException {

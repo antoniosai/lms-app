@@ -14,6 +14,9 @@ import com.app.lms.modules.profile.dtos.ProfileDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Primary
@@ -100,6 +103,24 @@ public class ProfileServiceImpl implements ProfileService {
     public void updateProfile(String username, AdministratorDTO newProfileData) throws NotFoundException {
         AdministratorDTO administrator = getAdministratorProfile(username);
         administratorService.updateAdminByUuid(administrator.getAdminUuid(), newProfileData);
+    }
+
+    public StudentDTO getCurrentStudent() throws NotFoundException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return getStudentProfile(authentication.getName());
+        }
+
+        throw new NotFoundException("Student UUID not Found");
+    }
+
+    public InstructorDTO getCurrentInstructor() throws NotFoundException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return getInstructorProfile(authentication.getName());
+        }
+
+        throw new NotFoundException("Instructor UUID not Found");
     }
 
 }

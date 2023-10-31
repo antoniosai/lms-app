@@ -8,4 +8,5 @@ import java.util.UUID;
 public class GetMasterCourseRequest {
     private String courseName;
     private UUID instructorUuid;
+    private UUID studentUuid;
 }

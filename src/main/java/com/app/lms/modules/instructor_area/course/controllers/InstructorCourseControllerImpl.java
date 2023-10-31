@@ -8,6 +8,9 @@ import com.app.lms.core.validations.IsNumeric;
 import com.app.lms.modules.admin_area.master_course.dtos.MasterCourseDTO;
 import com.app.lms.modules.admin_area.master_course.entities.MasterCourseEntity;
 import com.app.lms.modules.admin_area.master_course.requests.GetMasterCourseRequest;
+import com.app.lms.modules.admin_area.student.dtos.StudentDTO;
+import com.app.lms.modules.admin_area.student.entities.StudentEntity;
+import com.app.lms.modules.admin_area.student.requests.GetStudentRequest;
 import com.app.lms.modules.instructor_area.course.services.InstructorCourseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +55,21 @@ public class InstructorCourseControllerImpl implements InstructorCourseControlle
         return new HttpResponseDTO<>(instructorCourseService.updateCourseByUuid(courseUuid, newCourseData))
                 .setResponseHeaders("courseUuid", courseUuid)
                 .toResponse("Fetched One Course by UUID from Server");
+    }
+
+    @Override
+    @GetMapping(value = "/{courseUuid}/student", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HttpResponseDTO<PaginationUtil<StudentEntity, StudentDTO>>> getEnrolledStudents(
+            @PathVariable UUID courseUuid,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int perPage,
+            GetStudentRequest getStudentRequest
+    ) throws ForbiddenException, NotFoundException {
+        return new HttpResponseDTO<>(instructorCourseService.getStudentEnrolled(courseUuid, page, perPage, getStudentRequest))
+                .setResponseHeaders("courseUuid", courseUuid)
+                .setResponseHeaders("page", page)
+                .setResponseHeaders("perPage", perPage)
+                .toResponse("See Enrolled Student");
     }
 
 }

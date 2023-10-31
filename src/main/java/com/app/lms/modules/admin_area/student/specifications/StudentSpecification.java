@@ -5,14 +5,27 @@ import com.app.lms.modules.admin_area.student.entities.StudentEntity;
 import com.app.lms.modules.admin_area.student.requests.GetStudentRequest;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.List;
+import java.util.UUID;
+
 public class StudentSpecification {
 
     public static Specification<StudentEntity> searchByPaginationRequest(GetStudentRequest request) {
         return Specification
-                .where(likeStudentEmail(request.getEmail()))
+                .where(whereStudentInByUuid(request.getStudentUuid()))
                 .or(likeStudentName(request.getName()))
                 .or(likeStudentIdentificationNumber(request.getIdentificationNumber()));
     }
+
+
+
+    private static Specification<StudentEntity> whereStudentInByUuid(List<UUID> studentUuid) {
+        if (studentUuid == null) return null;
+
+        return (root, query, builder) ->
+                root.get("studentUuid").in(studentUuid);
+    }
+
 
     private static Specification<StudentEntity> likeStudentEmail(String studentEmail) {
 

@@ -4,6 +4,7 @@ import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public interface EnrollmentController {

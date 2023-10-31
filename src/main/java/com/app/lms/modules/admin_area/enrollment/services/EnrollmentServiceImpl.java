@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -51,5 +52,22 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public void removeStudentEnrollment(UUID enrollmentUuid) {
         enrollmentMainRepository.deleteById(enrollmentUuid);
+    }
+
+    @Override
+    public List<UUID> findStudentUuidByCourseUuid(UUID courseUuid) {
+        List<UUID> studentUuid = enrollmentMainRepository.findStudentUuidByCourseUuid(courseUuid);
+
+        log.info("UUID => {}", studentUuid);
+
+        return studentUuid;
+    }
+
+    @Override
+    public boolean checkEnrollmentByStudentUuidAndCourseUuid(UUID studentUuid, UUID courseUuid) {
+
+        List<UUID> listCourseUuid = enrollmentMainRepository.findCourseUuidByStudentUuidAndCourseUuid(studentUuid, courseUuid);
+
+        return !listCourseUuid.isEmpty();
     }
 }
