@@ -18,7 +18,6 @@ public class StudentSpecification {
     }
 
 
-
     private static Specification<StudentEntity> whereStudentInByUuid(List<UUID> studentUuid) {
         if (studentUuid == null) return null;
 

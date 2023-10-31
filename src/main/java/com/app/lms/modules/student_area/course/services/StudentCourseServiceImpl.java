@@ -8,13 +8,11 @@ import com.app.lms.modules.admin_area.master_course.dtos.MasterCourseDTO;
 import com.app.lms.modules.admin_area.master_course.entities.MasterCourseEntity;
 import com.app.lms.modules.admin_area.master_course.requests.GetMasterCourseRequest;
 import com.app.lms.modules.admin_area.master_course.services.MasterCourseService;
-import com.app.lms.modules.admin_area.student.dtos.StudentDTO;
 import com.app.lms.modules.profile.services.ProfileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -39,7 +37,7 @@ public class StudentCourseServiceImpl extends ProfileServiceImpl implements Stud
     @Override
     public MasterCourseDTO getCourseByUuid(UUID courseUuid) throws NotFoundException, ForbiddenException {
 
-        if(!isStudentEnrolledCourse(getCurrentStudent().getStudentUuid(), courseUuid)) {
+        if (!isStudentEnrolledCourse(getCurrentStudent().getStudentUuid(), courseUuid)) {
             throw new ForbiddenException("You are not Allowed to Access This Course");
         }
 

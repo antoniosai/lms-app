@@ -13,5 +13,6 @@ import java.util.UUID;
 
 public interface StudentCourseController {
     ResponseEntity<HttpResponseDTO<PaginationUtil<MasterCourseEntity, MasterCourseDTO>>> getPaginationCourse(int page, int perPage, GetMasterCourseRequest instructorCoursePaginationRequest) throws NotFoundException;
+
     ResponseEntity<HttpResponseDTO<MasterCourseDTO>> getDetailCourse(UUID courseUuid) throws NotFoundException, ForbiddenException;
 }
