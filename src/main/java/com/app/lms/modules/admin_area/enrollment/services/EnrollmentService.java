@@ -12,6 +12,8 @@ public interface EnrollmentService {
 
     List<UUID> findStudentUuidByCourseUuid(UUID courseUuid);
 
+    List<UUID> findCourseUuidByStudentUuid(UUID studentUuid);
+
     boolean checkEnrollmentByStudentUuidAndCourseUuid(UUID studentUuid, UUID courseUuid);
 
 }

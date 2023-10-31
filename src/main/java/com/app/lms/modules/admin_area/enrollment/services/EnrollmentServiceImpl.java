@@ -70,4 +70,9 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
         return !listCourseUuid.isEmpty();
     }
+
+    @Override
+    public List<UUID> findCourseUuidByStudentUuid(UUID studentUuid) {
+        return enrollmentMainRepository.findCourseUuidByStudentUuid(studentUuid);
+    }
 }

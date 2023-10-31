@@ -13,6 +13,7 @@ import com.app.lms.modules.profile.services.ProfileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -27,7 +28,10 @@ public class StudentCourseServiceImpl extends ProfileServiceImpl implements Stud
 
     @Override
     public PaginationUtil<MasterCourseEntity, MasterCourseDTO> getPaginationCourseByInstructorUuid(int page, int perPage, GetMasterCourseRequest studentCoursePaginationRequest) throws NotFoundException {
-        studentCoursePaginationRequest.setStudentUuid(getCurrentStudent().getStudentUuid());
+
+        List<UUID> coursesUuid = enrollmentService.findCourseUuidByStudentUuid(getCurrentStudent().getStudentUuid());
+
+        studentCoursePaginationRequest.setCoursesUuid(coursesUuid);
 
         return masterCourseService.getCourseByPagination(page, perPage, studentCoursePaginationRequest);
     }
