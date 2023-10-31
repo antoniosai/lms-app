@@ -8,7 +8,7 @@ public class AppException extends Exception {
 
     private static final long serialVersionUID = -6525644934587822810L;
 
-    private HttpStatus httpStatus;
+    private final HttpStatus httpStatus;
 
     public AppException(String message) {
         super(message);

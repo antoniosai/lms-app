@@ -12,9 +12,9 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = IsDateValidator.class)
 public @interface IsDate {
 
-    public String message() default "Invalid Date";
+    String message() default "Invalid Date";
 
-    public Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-    public Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }

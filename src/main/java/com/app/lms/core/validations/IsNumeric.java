@@ -11,9 +11,9 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = IsNumericValidator.class)
 public @interface IsNumeric {
 
-    public String message() default "Input should be a numeric";
+    String message() default "Input should be a numeric";
 
-    public Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-    public Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }
