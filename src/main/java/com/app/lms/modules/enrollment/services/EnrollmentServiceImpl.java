@@ -1,6 +1,5 @@
 package com.app.lms.modules.enrollment.services;
 
-import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.ObjectMapperUtil;
 import com.app.lms.modules.course.dtos.CourseDTO;
 import com.app.lms.modules.course.entities.CourseEntity;
@@ -24,7 +23,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     private EnrollmentMainRepository enrollmentMainRepository;
 
     @Override
-    public void addStudentEnrollment(CourseDTO course, StudentDTO student) throws NotFoundException {
+    public void addStudentEnrollment(CourseDTO course, StudentDTO student) {
 
         EnrollmentEntity newEnrollment = new EnrollmentEntity();
         newEnrollment.setEnrollmentUuid(UUID.randomUUID());
