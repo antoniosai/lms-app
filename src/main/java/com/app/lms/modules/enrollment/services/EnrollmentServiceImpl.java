@@ -33,8 +33,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         newEnrollment.setEnrollmentCourse(ObjectMapperUtil.map(course, CourseEntity.class));
         newEnrollment.setEnrollmentStudent(ObjectMapperUtil.map(student, StudentEntity.class));
 
-        log.info("newEnrollment => " + newEnrollment);
-
         enrollmentMainRepository.save(newEnrollment);
     }
 
@@ -45,11 +43,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public List<UUID> findStudentUuidByCourseUuid(UUID courseUuid) {
-        List<UUID> studentUuid = enrollmentMainRepository.findStudentUuidByCourseUuid(courseUuid);
-
-        log.info("UUID => {}", studentUuid);
-
-        return studentUuid;
+        return enrollmentMainRepository.findStudentUuidByCourseUuid(courseUuid);
     }
 
     @Override

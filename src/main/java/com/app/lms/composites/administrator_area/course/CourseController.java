@@ -1,9 +1,8 @@
-package com.app.lms.composites.administrator_area.course.controllers;
+package com.app.lms.composites.administrator_area.course;
 
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.PaginationUtil;
-import com.app.lms.modules.instructor.dtos.InstructorDTO;
 import com.app.lms.modules.course.dtos.CourseDTO;
 import com.app.lms.modules.course.entities.CourseEntity;
 import com.app.lms.modules.course.requests.GetCourseRequest;

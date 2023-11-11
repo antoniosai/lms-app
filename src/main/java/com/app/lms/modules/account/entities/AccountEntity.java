@@ -34,6 +34,9 @@ public class AccountEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "account_type", nullable = false, length = 20)
     private AccountTypeEnum accountType;
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn()
+    private StudentEntity student;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -72,8 +75,4 @@ public class AccountEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    @OneToOne(orphanRemoval = true)
-    @JoinColumn()
-    private StudentEntity student;
 }

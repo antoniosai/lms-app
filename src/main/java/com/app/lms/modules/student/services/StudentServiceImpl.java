@@ -7,7 +7,6 @@ import com.app.lms.core.utils.ObjectMapperUtil;
 import com.app.lms.core.utils.PaginationUtil;
 import com.app.lms.core.utils.SpecificationUtil;
 import com.app.lms.modules.course.dtos.CourseDTO;
-import com.app.lms.modules.course.services.CourseService;
 import com.app.lms.modules.enrollment.services.EnrollmentService;
 import com.app.lms.modules.student.dtos.StudentDTO;
 import com.app.lms.modules.student.entities.StudentEntity;

@@ -4,13 +4,10 @@ import com.app.lms.core.exceptions.ForbiddenException;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.PaginationUtil;
 import com.app.lms.enums.AccountTypeEnum;
-import com.app.lms.modules.instructor.dtos.InstructorDTO;
 import com.app.lms.modules.course.dtos.CourseDTO;
 import com.app.lms.modules.course.entities.CourseEntity;
 import com.app.lms.modules.course.requests.GetCourseRequest;
-import com.app.lms.modules.student.dtos.StudentDTO;
-import com.app.lms.modules.student.entities.StudentEntity;
-import com.app.lms.modules.student.requests.GetStudentRequest;
+import com.app.lms.modules.instructor.dtos.InstructorDTO;
 
 import java.util.UUID;
 
@@ -37,6 +34,7 @@ public interface CourseService {
     // Instructor Service
 
     PaginationUtil<CourseEntity, CourseDTO> getPaginationCourseByInstructorUuid(int page, int perPage, GetCourseRequest instructorCoursePaginationRequest) throws NotFoundException;
+
     PaginationUtil<CourseEntity, CourseDTO> getPaginationCourseByInstructorUuid(int page, int perPage, GetCourseRequest instructorCoursePaginationRequest, AccountTypeEnum accountTypeEnum) throws NotFoundException;
 
     CourseDTO getCourseByUuid(UUID courseUuid, AccountTypeEnum accountType) throws NotFoundException, ForbiddenException;

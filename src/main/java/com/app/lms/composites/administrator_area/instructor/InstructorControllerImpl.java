@@ -1,4 +1,4 @@
-package com.app.lms.composites.administrator_area.instructor.controllers;
+package com.app.lms.composites.administrator_area.instructor;
 
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;

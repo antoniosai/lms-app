@@ -112,7 +112,7 @@ public class CourseServiceImpl extends ProfileServiceImpl implements CourseServi
     @Override
     public CourseDTO updateCourseByUuid(UUID courseUuid, CourseDTO newCourseData, AccountTypeEnum accountTypeEnum) throws NotFoundException, ForbiddenException {
 
-        if(accountTypeEnum == AccountTypeEnum.INSTRUCTOR) {
+        if (accountTypeEnum == AccountTypeEnum.INSTRUCTOR) {
             CourseDTO course = getCourseByUuid(courseUuid);
 
             if (!Objects.equals(course.getCourseInstructor().getInstructorUuid(), getCurrentInstructor().getInstructorUuid())) {
@@ -139,12 +139,12 @@ public class CourseServiceImpl extends ProfileServiceImpl implements CourseServi
 
         CourseDTO course = getCourseByUuid(courseUuid);
 
-        if(accountTypeEnum == AccountTypeEnum.STUDENT) {
+        if (accountTypeEnum == AccountTypeEnum.STUDENT) {
             if (!isStudentEnrolledCourse(getCurrentStudent().getStudentUuid(), courseUuid)) {
                 throw new ForbiddenException("You are not Allowed to Access This Course");
             }
 
-        } else if(accountTypeEnum == AccountTypeEnum.INSTRUCTOR) {
+        } else if (accountTypeEnum == AccountTypeEnum.INSTRUCTOR) {
             if (!Objects.equals(course.getCourseInstructor().getInstructorUuid(), getCurrentInstructor().getInstructorUuid())) {
                 throw new ForbiddenException("You are not Allowed to Edit This Course");
             }

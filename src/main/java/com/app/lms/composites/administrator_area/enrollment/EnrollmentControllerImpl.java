@@ -1,4 +1,4 @@
-package com.app.lms.composites.administrator_area.enrollment.controllers;
+package com.app.lms.composites.administrator_area.enrollment;
 
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;
@@ -36,7 +36,7 @@ public class EnrollmentControllerImpl implements EnrollmentController {
                     .setResponseHeaders("courseUuid", courseUuid)
                     .setResponseHeaders("studentUuid", studentUuid)
                     .toResponse("Successfully Enrolled Course to Student");
-        } catch(DataIntegrityViolationException ex) {
+        } catch (DataIntegrityViolationException ex) {
             throw new DataIntegrityViolationException(ex.getMessage());
         }
     }
