@@ -3,6 +3,7 @@ package com.app.lms.modules.course.services;
 import com.app.lms.core.exceptions.ForbiddenException;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.PaginationUtil;
+import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.instructor.dtos.InstructorDTO;
 import com.app.lms.modules.course.dtos.CourseDTO;
 import com.app.lms.modules.course.entities.CourseEntity;
@@ -27,6 +28,8 @@ public interface CourseService {
 
     CourseDTO updateCourseByUuid(UUID courseUuid, CourseDTO newCourseData) throws NotFoundException;
 
+    CourseDTO updateCourseByUuid(UUID courseUuid, CourseDTO newCourseData, AccountTypeEnum accountType) throws NotFoundException, ForbiddenException;
+
     CourseDTO findSingleCourseByUuid(UUID instructorUuid) throws NotFoundException;
 
     void deleteCourseByUuid(UUID courseUuid);
@@ -34,16 +37,9 @@ public interface CourseService {
     // Instructor Service
 
     PaginationUtil<CourseEntity, CourseDTO> getPaginationCourseByInstructorUuid(int page, int perPage, GetCourseRequest instructorCoursePaginationRequest) throws NotFoundException;
+    PaginationUtil<CourseEntity, CourseDTO> getPaginationCourseByInstructorUuid(int page, int perPage, GetCourseRequest instructorCoursePaginationRequest, AccountTypeEnum accountTypeEnum) throws NotFoundException;
 
-    CourseDTO getCourseByUuidFromInstructor(UUID courseUuid) throws NotFoundException, ForbiddenException;
-
-    CourseDTO updateCourseByUuidFromInstructor(UUID courseUuid, CourseDTO newCourseData) throws NotFoundException, ForbiddenException;
-
-    PaginationUtil<StudentEntity, StudentDTO> getStudentEnrolledFromInstructor(UUID courseUuid, int page, int perPage, GetStudentRequest getStudentRequest) throws ForbiddenException, NotFoundException;
+    CourseDTO getCourseByUuid(UUID courseUuid, AccountTypeEnum accountType) throws NotFoundException, ForbiddenException;
 
     // Student Area Course
-
-    PaginationUtil<CourseEntity, CourseDTO> getPaginationCourseByInstructorUuidFromStudent(int page, int perPage, GetCourseRequest instructorCoursePaginationRequest) throws NotFoundException;
-
-    CourseDTO getCourseByUuidFromStudent(UUID courseUuid) throws NotFoundException, ForbiddenException;
 }

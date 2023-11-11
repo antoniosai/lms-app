@@ -3,18 +3,15 @@ package com.app.lms.modules.course.services;
 import com.app.lms.core.exceptions.ForbiddenException;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.*;
-import com.app.lms.modules.enrollment.services.EnrollmentService;
-import com.app.lms.modules.instructor.dtos.InstructorDTO;
+import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.course.dtos.CourseDTO;
 import com.app.lms.modules.course.entities.CourseEntity;
 import com.app.lms.modules.course.repositories.CourseMainRepository;
 import com.app.lms.modules.course.requests.GetCourseRequest;
 import com.app.lms.modules.course.specifications.CourseSpecification;
+import com.app.lms.modules.enrollment.services.EnrollmentService;
+import com.app.lms.modules.instructor.dtos.InstructorDTO;
 import com.app.lms.modules.profile.services.ProfileServiceImpl;
-import com.app.lms.modules.student.dtos.StudentDTO;
-import com.app.lms.modules.student.entities.StudentEntity;
-import com.app.lms.modules.student.requests.GetStudentRequest;
-import com.app.lms.modules.student.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -28,9 +25,6 @@ public class CourseServiceImpl extends ProfileServiceImpl implements CourseServi
 
     @Autowired
     private CourseMainRepository masterCourseMainRepository;
-
-    @Autowired
-    private StudentService studentService;
 
     @Autowired
     private EnrollmentService enrollmentService;
@@ -116,43 +110,22 @@ public class CourseServiceImpl extends ProfileServiceImpl implements CourseServi
     }
 
     @Override
-    public CourseDTO getCourseByUuidFromInstructor(UUID courseUuid) throws NotFoundException, ForbiddenException {
-        CourseDTO course = getCourseByUuid(courseUuid);
+    public CourseDTO updateCourseByUuid(UUID courseUuid, CourseDTO newCourseData, AccountTypeEnum accountTypeEnum) throws NotFoundException, ForbiddenException {
 
-        if (!Objects.equals(course.getCourseInstructor().getInstructorUuid(), getCurrentInstructor().getInstructorUuid())) {
-            throw new ForbiddenException("You are not Allowed to Edit This Course");
+        if(accountTypeEnum == AccountTypeEnum.INSTRUCTOR) {
+            CourseDTO course = getCourseByUuid(courseUuid);
+
+            if (!Objects.equals(course.getCourseInstructor().getInstructorUuid(), getCurrentInstructor().getInstructorUuid())) {
+                throw new ForbiddenException("You are not Allowed to Access This Course");
+            }
         }
 
-        return course;
-    }
-
-    @Override
-    public CourseDTO updateCourseByUuidFromInstructor(UUID courseUuid, CourseDTO newCourseData) throws NotFoundException, ForbiddenException {
-
-        CourseDTO course = getCourseByUuid(courseUuid);
-
-        if (!Objects.equals(course.getCourseInstructor().getInstructorUuid(), getCurrentInstructor().getInstructorUuid())) {
-            throw new ForbiddenException("You are not Allowed to Access This Course");
-        }
 
         return updateCourseByUuid(courseUuid, newCourseData);
     }
 
     @Override
-    public PaginationUtil<StudentEntity, StudentDTO> getStudentEnrolledFromInstructor(UUID courseUuid, int page, int perPage, GetStudentRequest getStudentRequest) throws ForbiddenException, NotFoundException {
-        CourseDTO course = getCourseByUuid(courseUuid);
-
-        if (!Objects.equals(course.getCourseInstructor().getInstructorUuid(), getCurrentInstructor().getInstructorUuid())) {
-            throw new ForbiddenException("You are not Allowed to Access Enrolled Student on this Course");
-        }
-
-        getStudentRequest.setStudentUuid(enrollmentService.findStudentUuidByCourseUuid(courseUuid));
-
-        return studentService.getStudentByPagination(page, perPage, getStudentRequest);
-    }
-
-    @Override
-    public PaginationUtil<CourseEntity, CourseDTO> getPaginationCourseByInstructorUuidFromStudent(int page, int perPage, GetCourseRequest studentCoursePaginationRequest) throws NotFoundException {
+    public PaginationUtil<CourseEntity, CourseDTO> getPaginationCourseByInstructorUuid(int page, int perPage, GetCourseRequest studentCoursePaginationRequest, AccountTypeEnum accountTypeEnum) throws NotFoundException {
 
         List<UUID> coursesUuid = enrollmentService.findCourseUuidByStudentUuid(getCurrentStudent().getStudentUuid());
 
@@ -162,13 +135,22 @@ public class CourseServiceImpl extends ProfileServiceImpl implements CourseServi
     }
 
     @Override
-    public CourseDTO getCourseByUuidFromStudent(UUID courseUuid) throws NotFoundException, ForbiddenException {
+    public CourseDTO getCourseByUuid(UUID courseUuid, AccountTypeEnum accountTypeEnum) throws NotFoundException, ForbiddenException {
 
-        if (!isStudentEnrolledCourse(getCurrentStudent().getStudentUuid(), courseUuid)) {
-            throw new ForbiddenException("You are not Allowed to Access This Course");
+        CourseDTO course = getCourseByUuid(courseUuid);
+
+        if(accountTypeEnum == AccountTypeEnum.STUDENT) {
+            if (!isStudentEnrolledCourse(getCurrentStudent().getStudentUuid(), courseUuid)) {
+                throw new ForbiddenException("You are not Allowed to Access This Course");
+            }
+
+        } else if(accountTypeEnum == AccountTypeEnum.INSTRUCTOR) {
+            if (!Objects.equals(course.getCourseInstructor().getInstructorUuid(), getCurrentInstructor().getInstructorUuid())) {
+                throw new ForbiddenException("You are not Allowed to Edit This Course");
+            }
         }
 
-        return getCourseByUuid(courseUuid);
+        return course;
     }
 
     @Override

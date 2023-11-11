@@ -1,10 +1,14 @@
 package com.app.lms.modules.student.services;
 
+import com.app.lms.core.exceptions.ForbiddenException;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.JpaResultHelperUtil;
 import com.app.lms.core.utils.ObjectMapperUtil;
 import com.app.lms.core.utils.PaginationUtil;
 import com.app.lms.core.utils.SpecificationUtil;
+import com.app.lms.modules.course.dtos.CourseDTO;
+import com.app.lms.modules.course.services.CourseService;
+import com.app.lms.modules.enrollment.services.EnrollmentService;
 import com.app.lms.modules.student.dtos.StudentDTO;
 import com.app.lms.modules.student.entities.StudentEntity;
 import com.app.lms.modules.student.repositories.StudentMainRepository;
@@ -17,14 +21,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
 @Slf4j
 public class StudentServiceImpl implements StudentService {
-
     @Autowired
     private StudentMainRepository studentMainRepository;
+    @Autowired
+    private EnrollmentService enrollmentService;
 
     @Override
     public PaginationUtil<StudentEntity, StudentDTO> getStudentByPagination(int page, int perPage, GetStudentRequest getStudentRequest) {
@@ -35,6 +41,19 @@ public class StudentServiceImpl implements StudentService {
         );
 
         return new PaginationUtil<>(pagedData, StudentDTO.class);
+    }
+
+
+    @Override
+    public PaginationUtil<StudentEntity, StudentDTO> getStudentByPagination(CourseDTO course, int page, int perPage, UUID instructorUuid, GetStudentRequest getStudentRequest) throws ForbiddenException, NotFoundException {
+
+        if (!Objects.equals(course.getCourseInstructor().getInstructorUuid(), instructorUuid)) {
+            throw new ForbiddenException("You are not Allowed to Access Enrolled Student on this Course");
+        }
+
+        getStudentRequest.setStudentUuid(enrollmentService.findStudentUuidByCourseUuid(course.getCourseUuid()));
+
+        return getStudentByPagination(page, perPage, getStudentRequest);
     }
 
     @Override

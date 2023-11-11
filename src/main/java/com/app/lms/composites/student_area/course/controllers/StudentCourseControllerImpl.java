@@ -4,6 +4,7 @@ import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.ForbiddenException;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.PaginationUtil;
+import com.app.lms.enums.AccountTypeEnum;
 import com.app.lms.modules.course.dtos.CourseDTO;
 import com.app.lms.modules.course.entities.CourseEntity;
 import com.app.lms.modules.course.requests.GetCourseRequest;
@@ -32,7 +33,7 @@ public class StudentCourseControllerImpl implements StudentCourseController {
             @RequestParam(defaultValue = "20") int perPage,
             GetCourseRequest masterCourseRequest
     ) throws NotFoundException {
-        return new HttpResponseDTO<>(courseService.getPaginationCourseByInstructorUuidFromStudent(page, perPage, masterCourseRequest))
+        return new HttpResponseDTO<>(courseService.getPaginationCourseByInstructorUuid(page, perPage, masterCourseRequest, AccountTypeEnum.STUDENT))
                 .setResponseHeaders("masterCourseRequest", masterCourseRequest)
                 .setResponseHeaders("page", page)
                 .setResponseHeaders("perPage", perPage)
@@ -42,7 +43,7 @@ public class StudentCourseControllerImpl implements StudentCourseController {
     @Override
     @GetMapping(value = "/{courseUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpResponseDTO<CourseDTO>> getDetailCourse(@PathVariable UUID courseUuid) throws NotFoundException, ForbiddenException {
-        return new HttpResponseDTO<>(courseService.getCourseByUuidFromStudent(courseUuid))
+        return new HttpResponseDTO<>(courseService.getCourseByUuid(courseUuid, AccountTypeEnum.STUDENT))
                 .setResponseHeaders("courseUuid", courseUuid)
                 .toResponse("Fetched One Course by UUID from Server");
     }

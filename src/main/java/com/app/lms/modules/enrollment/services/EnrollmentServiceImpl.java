@@ -2,14 +2,12 @@ package com.app.lms.modules.enrollment.services;
 
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.ObjectMapperUtil;
-import com.app.lms.modules.enrollment.entities.EnrollmentEntity;
-import com.app.lms.modules.enrollment.repositories.EnrollmentMainRepository;
 import com.app.lms.modules.course.dtos.CourseDTO;
 import com.app.lms.modules.course.entities.CourseEntity;
-import com.app.lms.modules.course.services.CourseService;
+import com.app.lms.modules.enrollment.entities.EnrollmentEntity;
+import com.app.lms.modules.enrollment.repositories.EnrollmentMainRepository;
 import com.app.lms.modules.student.dtos.StudentDTO;
 import com.app.lms.modules.student.entities.StudentEntity;
-import com.app.lms.modules.student.services.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,14 +23,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Autowired
     private EnrollmentMainRepository enrollmentMainRepository;
 
-    @Autowired
-    private StudentService studentService;
-
-
     @Override
-    public void addStudentEnrollment(CourseDTO course, UUID studentUuid) throws NotFoundException {
-
-        StudentDTO student = studentService.getStudentByUuid(studentUuid);
+    public void addStudentEnrollment(CourseDTO course, StudentDTO student) throws NotFoundException {
 
         EnrollmentEntity newEnrollment = new EnrollmentEntity();
         newEnrollment.setEnrollmentUuid(UUID.randomUUID());

@@ -13,5 +13,7 @@ public class GetStudentRequest {
 
     private String email;
 
+    private UUID courseUuid;
+
     private List<UUID> studentUuid;
 }

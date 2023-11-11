@@ -4,6 +4,7 @@ import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.modules.course.services.CourseService;
 import com.app.lms.modules.enrollment.services.EnrollmentService;
+import com.app.lms.modules.student.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,15 @@ public class EnrollmentControllerImpl implements EnrollmentController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private StudentService studentService;
+
     @Override
     @PutMapping("/course/{courseUuid}/student/{studentUuid}")
     public ResponseEntity<HttpResponseDTO<String>> addStudentEnrollment(@PathVariable UUID courseUuid, @PathVariable UUID studentUuid) throws NotFoundException {
 
         try {
-            enrollmentService.addStudentEnrollment(courseService.getCourseByUuid(courseUuid), studentUuid);
+            enrollmentService.addStudentEnrollment(courseService.getCourseByUuid(courseUuid), studentService.getStudentByUuid(studentUuid));
 
             return new HttpResponseDTO<>("Successfully Enrolled Course to Student")
                     .setResponseHeaders("courseUuid", courseUuid)

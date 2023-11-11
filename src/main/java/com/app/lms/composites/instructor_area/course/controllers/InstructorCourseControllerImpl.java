@@ -9,9 +9,11 @@ import com.app.lms.modules.course.dtos.CourseDTO;
 import com.app.lms.modules.course.entities.CourseEntity;
 import com.app.lms.modules.course.requests.GetCourseRequest;
 import com.app.lms.modules.course.services.CourseService;
+import com.app.lms.modules.profile.services.ProfileService;
 import com.app.lms.modules.student.dtos.StudentDTO;
 import com.app.lms.modules.student.entities.StudentEntity;
 import com.app.lms.modules.student.requests.GetStudentRequest;
+import com.app.lms.modules.student.services.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,6 +28,10 @@ public class InstructorCourseControllerImpl implements InstructorCourseControlle
 
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private StudentService studentService;
+    @Autowired
+    private ProfileService profileService;
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -65,7 +71,9 @@ public class InstructorCourseControllerImpl implements InstructorCourseControlle
             @RequestParam(defaultValue = "20") int perPage,
             GetStudentRequest getStudentRequest
     ) throws ForbiddenException, NotFoundException {
-        return new HttpResponseDTO<>(courseService.getStudentEnrolledFromInstructor(courseUuid, page, perPage, getStudentRequest))
+
+        CourseDTO course = courseService.getCourseByUuid(courseUuid);
+        return new HttpResponseDTO<>(studentService.getStudentByPagination(course, page, perPage, profileService.getCurrentInstructor().getInstructorUuid(), getStudentRequest))
                 .setResponseHeaders("courseUuid", courseUuid)
                 .setResponseHeaders("page", page)
                 .setResponseHeaders("perPage", perPage)

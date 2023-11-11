@@ -13,4 +13,8 @@ public interface ProfileService {
     void updateProfile(String username, InstructorDTO newProfileData) throws NotFoundException;
 
     void updateProfile(String username, AdministratorDTO newProfileData) throws NotFoundException;
+
+    InstructorDTO getCurrentInstructor() throws NotFoundException;
+
+    StudentDTO getCurrentStudent() throws NotFoundException;
 }

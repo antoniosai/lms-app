@@ -105,6 +105,7 @@ public class ProfileServiceImpl implements ProfileService {
         administratorService.updateAdminByUuid(administrator.getAdminUuid(), newProfileData);
     }
 
+    @Override
     public StudentDTO getCurrentStudent() throws NotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -114,6 +115,7 @@ public class ProfileServiceImpl implements ProfileService {
         throw new NotFoundException("Student UUID not Found");
     }
 
+    @Override
     public InstructorDTO getCurrentInstructor() throws NotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
