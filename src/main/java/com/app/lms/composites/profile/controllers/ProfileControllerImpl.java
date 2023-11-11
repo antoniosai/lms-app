@@ -1,4 +1,4 @@
-package com.app.lms.modules.profile.controllers;
+package com.app.lms.composites.profile.controllers;
 
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;

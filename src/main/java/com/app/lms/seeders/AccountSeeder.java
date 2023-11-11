@@ -1,10 +1,10 @@
 package com.app.lms.seeders;
 
 import com.app.lms.enums.AccountTypeEnum;
-import com.app.lms.modules.admin_area.account.dtos.AccountDTO;
-import com.app.lms.modules.admin_area.account.services.AccountService;
-import com.app.lms.modules.admin_area.student.dtos.StudentDTO;
-import com.app.lms.modules.admin_area.student.services.StudentService;
+import com.app.lms.modules.account.dtos.AccountDTO;
+import com.app.lms.modules.account.services.AccountService;
+import com.app.lms.modules.student.dtos.StudentDTO;
+import com.app.lms.modules.student.services.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

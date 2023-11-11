@@ -1,4 +1,4 @@
-package com.app.lms.modules.admin_area.enrollment.controllers;
+package com.app.lms.composites.administrator_area.enrollment.controllers;
 
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;

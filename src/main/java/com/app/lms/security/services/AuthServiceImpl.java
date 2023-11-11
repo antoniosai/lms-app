@@ -2,8 +2,8 @@ package com.app.lms.security.services;
 
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.enums.AccountTypeEnum;
-import com.app.lms.modules.admin_area.account.entities.AccountEntity;
-import com.app.lms.modules.admin_area.account.repositories.AccountMainRepository;
+import com.app.lms.modules.account.entities.AccountEntity;
+import com.app.lms.modules.account.repositories.AccountMainRepository;
 import com.app.lms.security.dtos.JwtAuthenticationDTO;
 import com.app.lms.security.request.LoginRequest;
 import lombok.RequiredArgsConstructor;

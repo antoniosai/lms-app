@@ -1,14 +1,15 @@
-package com.app.lms.modules.admin_area.master_course.controllers;
+package com.app.lms.composites.administrator_area.course.controllers;
 
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.PaginationUtil;
 import com.app.lms.core.validations.IsNumeric;
-import com.app.lms.modules.admin_area.instructor.dtos.InstructorDTO;
-import com.app.lms.modules.admin_area.master_course.dtos.MasterCourseDTO;
-import com.app.lms.modules.admin_area.master_course.entities.MasterCourseEntity;
-import com.app.lms.modules.admin_area.master_course.requests.GetMasterCourseRequest;
-import com.app.lms.modules.admin_area.master_course.services.MasterCourseService;
+import com.app.lms.modules.instructor.dtos.InstructorDTO;
+import com.app.lms.modules.course.dtos.CourseDTO;
+import com.app.lms.modules.course.entities.CourseEntity;
+import com.app.lms.modules.course.requests.GetCourseRequest;
+import com.app.lms.modules.course.services.CourseService;
+import com.app.lms.modules.instructor.services.InstructorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,18 +21,21 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/v1/administrator-area/courses")
-public class MasterCourseControllerImpl implements MasterCourseController {
+public class CourseControllerImpl implements CourseController {
 
     @Autowired
-    private MasterCourseService masterCourseService;
+    private CourseService courseService;
+
+    @Autowired
+    private InstructorService instructorService;
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<PaginationUtil<MasterCourseEntity, MasterCourseDTO>>> getCourseByPagination(
+    public ResponseEntity<HttpResponseDTO<PaginationUtil<CourseEntity, CourseDTO>>> getCourseByPagination(
             @RequestParam(defaultValue = "1") @IsNumeric int page,
             @RequestParam(defaultValue = "20") @IsNumeric int perPage,
-            GetMasterCourseRequest getMasterCourseRequest) {
-        return new HttpResponseDTO<>(masterCourseService.getCourseByPagination(page, perPage, getMasterCourseRequest))
+            GetCourseRequest getMasterCourseRequest) {
+        return new HttpResponseDTO<>(courseService.getCourseByPagination(page, perPage, getMasterCourseRequest))
                 .setResponseHeaders("getMasterCourseRequest", getMasterCourseRequest)
                 .setResponseHeaders("page", page)
                 .setResponseHeaders("perPage", perPage)
@@ -40,41 +44,44 @@ public class MasterCourseControllerImpl implements MasterCourseController {
 
     @Override
     @GetMapping(value = "/{courseUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<MasterCourseDTO>> getCourseById(@PathVariable UUID courseUuid) throws NotFoundException {
-        return new HttpResponseDTO<>(masterCourseService.getCourseByUuid(courseUuid))
+    public ResponseEntity<HttpResponseDTO<CourseDTO>> getCourseById(@PathVariable UUID courseUuid) throws NotFoundException {
+        return new HttpResponseDTO<>(courseService.getCourseByUuid(courseUuid))
                 .setResponseHeaders("courseUuid", courseUuid)
                 .toResponse("Fetch Single Course by Pagination from Server");
     }
 
     @Override
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<MasterCourseDTO>> createNewCourse(@Valid @RequestBody MasterCourseDTO newCourseData) {
-        return new HttpResponseDTO<>(masterCourseService.createNewCourse(newCourseData), HttpStatus.CREATED)
+    public ResponseEntity<HttpResponseDTO<CourseDTO>> createNewCourse(@Valid @RequestBody CourseDTO newCourseData) {
+        return new HttpResponseDTO<>(courseService.createNewCourse(newCourseData), HttpStatus.CREATED)
                 .setResponseHeaders("newCourseData", newCourseData)
                 .toResponse("Created New Course");
     }
 
     @Override
     @PutMapping(value = "/{courseUuid}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<MasterCourseDTO>> updateCourseByUuid(@PathVariable UUID courseUuid, @Valid @RequestBody MasterCourseDTO newCourseData) throws NotFoundException {
-        return new HttpResponseDTO<>(masterCourseService.updateCourseByUuid(courseUuid, newCourseData))
+    public ResponseEntity<HttpResponseDTO<CourseDTO>> updateCourseByUuid(@PathVariable UUID courseUuid, @Valid @RequestBody CourseDTO newCourseData) throws NotFoundException {
+        return new HttpResponseDTO<>(courseService.updateCourseByUuid(courseUuid, newCourseData))
                 .setResponseHeaders("newCourseData", newCourseData)
                 .toResponse("Updated Course by UUID");
     }
 
     @Override
-    @PutMapping(value = "/{courseUuid}/attach-instructor", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<MasterCourseDTO>> attachToInstructor(@PathVariable UUID courseUuid, @RequestBody @Valid InstructorDTO instructor) throws NotFoundException {
-        return new HttpResponseDTO<>(masterCourseService.attachToInstructor(courseUuid, instructor))
-                .setResponseHeaders("instructor", instructor)
+    @PutMapping(value = "/{courseUuid}/attach-instructor/{instructorUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HttpResponseDTO<CourseDTO>> attachToInstructor(@PathVariable UUID courseUuid, @PathVariable UUID instructorUuid) throws NotFoundException {
+
+        InstructorDTO instructor = instructorService.getInstructorByUuid(instructorUuid);
+
+        return new HttpResponseDTO<>(courseService.attachToInstructor(courseUuid, instructor))
+                .setResponseHeaders("instructorUuid", instructorUuid)
                 .setResponseHeaders("courseUuid", courseUuid)
                 .toResponse("Attached Course to Instructor " + instructor.getInstructorName());
     }
 
     @Override
     @PutMapping(value = "/{courseUuid}/detach-instructor", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<MasterCourseDTO>> detachFromInstructor(@PathVariable UUID courseUuid) throws NotFoundException {
-        return new HttpResponseDTO<>(masterCourseService.detachFromInstructor(courseUuid))
+    public ResponseEntity<HttpResponseDTO<CourseDTO>> detachFromInstructor(@PathVariable UUID courseUuid) throws NotFoundException {
+        return new HttpResponseDTO<>(courseService.detachFromInstructor(courseUuid))
                 .setResponseHeaders("courseUuid", courseUuid)
                 .toResponse("Detached Course by UUID");
     }
@@ -82,7 +89,7 @@ public class MasterCourseControllerImpl implements MasterCourseController {
     @Override
     @DeleteMapping(value = "/{courseUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpResponseDTO<String>> deleteCourseByUuid(@PathVariable UUID courseUuid) {
-        masterCourseService.deleteCourseByUuid(courseUuid);
+        courseService.deleteCourseByUuid(courseUuid);
         return new HttpResponseDTO<>("Successfully Deleted")
                 .setResponseHeaders("courseUuid", courseUuid)
                 .toResponse("Successfully Deleted Course by UUID");

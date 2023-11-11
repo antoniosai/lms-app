@@ -1,28 +1,28 @@
-package com.app.lms.modules.admin_area.master_course.controllers;
+package com.app.lms.composites.administrator_area.course.controllers;
 
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.PaginationUtil;
-import com.app.lms.modules.admin_area.instructor.dtos.InstructorDTO;
-import com.app.lms.modules.admin_area.master_course.dtos.MasterCourseDTO;
-import com.app.lms.modules.admin_area.master_course.entities.MasterCourseEntity;
-import com.app.lms.modules.admin_area.master_course.requests.GetMasterCourseRequest;
+import com.app.lms.modules.instructor.dtos.InstructorDTO;
+import com.app.lms.modules.course.dtos.CourseDTO;
+import com.app.lms.modules.course.entities.CourseEntity;
+import com.app.lms.modules.course.requests.GetCourseRequest;
 import org.springframework.http.ResponseEntity;
 
 import java.util.UUID;
 
-public interface MasterCourseController {
-    ResponseEntity<HttpResponseDTO<PaginationUtil<MasterCourseEntity, MasterCourseDTO>>> getCourseByPagination(int page, int perPage, GetMasterCourseRequest getMasterCourseRequest);
+public interface CourseController {
+    ResponseEntity<HttpResponseDTO<PaginationUtil<CourseEntity, CourseDTO>>> getCourseByPagination(int page, int perPage, GetCourseRequest getMasterCourseRequest);
 
-    ResponseEntity<HttpResponseDTO<MasterCourseDTO>> getCourseById(UUID courseUuid) throws NotFoundException;
+    ResponseEntity<HttpResponseDTO<CourseDTO>> getCourseById(UUID courseUuid) throws NotFoundException;
 
-    ResponseEntity<HttpResponseDTO<MasterCourseDTO>> createNewCourse(MasterCourseDTO newCourseData);
+    ResponseEntity<HttpResponseDTO<CourseDTO>> createNewCourse(CourseDTO newCourseData);
 
-    ResponseEntity<HttpResponseDTO<MasterCourseDTO>> updateCourseByUuid(UUID courseUuid, MasterCourseDTO newCourseData) throws NotFoundException;
+    ResponseEntity<HttpResponseDTO<CourseDTO>> updateCourseByUuid(UUID courseUuid, CourseDTO newCourseData) throws NotFoundException;
 
-    ResponseEntity<HttpResponseDTO<MasterCourseDTO>> attachToInstructor(UUID courseUuid, InstructorDTO instructor) throws NotFoundException;
+    ResponseEntity<HttpResponseDTO<CourseDTO>> attachToInstructor(UUID courseUuid, UUID instructorUuid) throws NotFoundException;
 
-    ResponseEntity<HttpResponseDTO<MasterCourseDTO>> detachFromInstructor(UUID courseUuid) throws NotFoundException;
+    ResponseEntity<HttpResponseDTO<CourseDTO>> detachFromInstructor(UUID courseUuid) throws NotFoundException;
 
     ResponseEntity<HttpResponseDTO<String>> deleteCourseByUuid(UUID courseUuid);
 

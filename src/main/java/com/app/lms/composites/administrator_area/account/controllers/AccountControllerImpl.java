@@ -1,4 +1,4 @@
-package com.app.lms.modules.account.controllers;
+package com.app.lms.composites.administrator_area.account.controllers;
 
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.enums.AccountTypeEnum;

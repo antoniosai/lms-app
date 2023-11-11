@@ -1,6 +1,6 @@
 package com.app.lms.security.configs;
 
-import com.app.lms.modules.admin_area.account.services.AccountService;
+import com.app.lms.modules.account.services.AccountService;
 import com.app.lms.security.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

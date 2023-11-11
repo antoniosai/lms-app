@@ -1,17 +1,17 @@
-package com.app.lms.modules.instructor_area.course.controllers;
+package com.app.lms.composites.instructor_area.course.controllers;
 
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.ForbiddenException;
 import com.app.lms.core.exceptions.NotFoundException;
 import com.app.lms.core.utils.PaginationUtil;
 import com.app.lms.core.validations.IsNumeric;
-import com.app.lms.modules.admin_area.master_course.dtos.MasterCourseDTO;
-import com.app.lms.modules.admin_area.master_course.entities.MasterCourseEntity;
-import com.app.lms.modules.admin_area.master_course.requests.GetMasterCourseRequest;
-import com.app.lms.modules.admin_area.student.dtos.StudentDTO;
-import com.app.lms.modules.admin_area.student.entities.StudentEntity;
-import com.app.lms.modules.admin_area.student.requests.GetStudentRequest;
-import com.app.lms.modules.instructor_area.course.services.InstructorCourseService;
+import com.app.lms.modules.course.dtos.CourseDTO;
+import com.app.lms.modules.course.entities.CourseEntity;
+import com.app.lms.modules.course.requests.GetCourseRequest;
+import com.app.lms.modules.course.services.CourseService;
+import com.app.lms.modules.student.dtos.StudentDTO;
+import com.app.lms.modules.student.entities.StudentEntity;
+import com.app.lms.modules.student.requests.GetStudentRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -25,16 +25,16 @@ import java.util.UUID;
 public class InstructorCourseControllerImpl implements InstructorCourseController {
 
     @Autowired
-    private InstructorCourseService instructorCourseService;
+    private CourseService courseService;
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<PaginationUtil<MasterCourseEntity, MasterCourseDTO>>> getPaginationCourse(
+    public ResponseEntity<HttpResponseDTO<PaginationUtil<CourseEntity, CourseDTO>>> getPaginationCourse(
             @RequestParam(defaultValue = "1") @IsNumeric int page,
             @RequestParam(defaultValue = "20") @IsNumeric int perPage,
-            GetMasterCourseRequest instructorCoursePaginationRequest
+            GetCourseRequest instructorCoursePaginationRequest
     ) throws NotFoundException {
-        return new HttpResponseDTO<>(instructorCourseService.getPaginationCourseByInstructorUuid(page, perPage, instructorCoursePaginationRequest))
+        return new HttpResponseDTO<>(courseService.getPaginationCourseByInstructorUuid(page, perPage, instructorCoursePaginationRequest))
                 .setResponseHeaders("instructorCoursePaginationRequest", instructorCoursePaginationRequest)
                 .setResponseHeaders("page", page)
                 .setResponseHeaders("perPage", perPage)
@@ -43,16 +43,16 @@ public class InstructorCourseControllerImpl implements InstructorCourseControlle
 
     @Override
     @GetMapping(value = "/{courseUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<MasterCourseDTO>> getOneCourseByUuid(@PathVariable UUID courseUuid) throws NotFoundException, ForbiddenException {
-        return new HttpResponseDTO<>(instructorCourseService.getCourseByUuid(courseUuid))
+    public ResponseEntity<HttpResponseDTO<CourseDTO>> getOneCourseByUuid(@PathVariable UUID courseUuid) throws NotFoundException, ForbiddenException {
+        return new HttpResponseDTO<>(courseService.getCourseByUuid(courseUuid))
                 .setResponseHeaders("courseUuid", courseUuid)
                 .toResponse("Fetched One Course by UUID from Server");
     }
 
     @Override
     @PutMapping(value = "/{courseUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpResponseDTO<MasterCourseDTO>> updateCourseByUuid(@PathVariable UUID courseUuid, @RequestBody @Valid MasterCourseDTO newCourseData) throws NotFoundException, ForbiddenException {
-        return new HttpResponseDTO<>(instructorCourseService.updateCourseByUuid(courseUuid, newCourseData))
+    public ResponseEntity<HttpResponseDTO<CourseDTO>> updateCourseByUuid(@PathVariable UUID courseUuid, @RequestBody @Valid CourseDTO newCourseData) throws NotFoundException, ForbiddenException {
+        return new HttpResponseDTO<>(courseService.updateCourseByUuid(courseUuid, newCourseData))
                 .setResponseHeaders("courseUuid", courseUuid)
                 .toResponse("Fetched One Course by UUID from Server");
     }
@@ -65,7 +65,7 @@ public class InstructorCourseControllerImpl implements InstructorCourseControlle
             @RequestParam(defaultValue = "20") int perPage,
             GetStudentRequest getStudentRequest
     ) throws ForbiddenException, NotFoundException {
-        return new HttpResponseDTO<>(instructorCourseService.getStudentEnrolled(courseUuid, page, perPage, getStudentRequest))
+        return new HttpResponseDTO<>(courseService.getStudentEnrolledFromInstructor(courseUuid, page, perPage, getStudentRequest))
                 .setResponseHeaders("courseUuid", courseUuid)
                 .setResponseHeaders("page", page)
                 .setResponseHeaders("perPage", perPage)

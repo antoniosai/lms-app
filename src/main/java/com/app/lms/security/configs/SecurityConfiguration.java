@@ -1,7 +1,7 @@
 package com.app.lms.security.configs;
 
 import com.app.lms.enums.AccountTypeEnum;
-import com.app.lms.modules.admin_area.account.services.AccountService;
+import com.app.lms.modules.account.services.AccountService;
 import com.app.lms.security.handlers.AuthEntryPointJwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

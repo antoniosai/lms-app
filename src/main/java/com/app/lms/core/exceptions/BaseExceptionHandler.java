@@ -206,7 +206,6 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
             return new ResponseEntity(appError, appError.getHttpStatus());
         }
 
-
         log.error("GENERAL Exception caused here: {}", exception.toString());
         AppError appError = new AppError(HttpStatus.BAD_REQUEST, exception.getMessage());
         return new ResponseEntity(appError, appError.getHttpStatus());

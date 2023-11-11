@@ -1,9 +1,11 @@
-package com.app.lms.modules.admin_area.enrollment.controllers;
+package com.app.lms.composites.administrator_area.enrollment.controllers;
 
 import com.app.lms.core.dtos.HttpResponseDTO;
 import com.app.lms.core.exceptions.NotFoundException;
-import com.app.lms.modules.admin_area.enrollment.services.EnrollmentService;
+import com.app.lms.modules.course.services.CourseService;
+import com.app.lms.modules.enrollment.services.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,16 +18,23 @@ public class EnrollmentControllerImpl implements EnrollmentController {
     @Autowired
     private EnrollmentService enrollmentService;
 
+    @Autowired
+    private CourseService courseService;
+
     @Override
     @PutMapping("/course/{courseUuid}/student/{studentUuid}")
     public ResponseEntity<HttpResponseDTO<String>> addStudentEnrollment(@PathVariable UUID courseUuid, @PathVariable UUID studentUuid) throws NotFoundException {
 
-        enrollmentService.addStudentEnrollment(courseUuid, studentUuid);
+        try {
+            enrollmentService.addStudentEnrollment(courseService.getCourseByUuid(courseUuid), studentUuid);
 
-        return new HttpResponseDTO<>("Successfully Enrolled Course to Student")
-                .setResponseHeaders("courseUuid", courseUuid)
-                .setResponseHeaders("studentUuid", studentUuid)
-                .toResponse("Successfully Enrolled Course to Student");
+            return new HttpResponseDTO<>("Successfully Enrolled Course to Student")
+                    .setResponseHeaders("courseUuid", courseUuid)
+                    .setResponseHeaders("studentUuid", studentUuid)
+                    .toResponse("Successfully Enrolled Course to Student");
+        } catch(DataIntegrityViolationException ex) {
+            throw new DataIntegrityViolationException(ex.getMessage());
+        }
     }
 
     @Override
