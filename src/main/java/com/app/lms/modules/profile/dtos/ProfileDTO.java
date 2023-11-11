@@ -1,6 +1,6 @@
 package com.app.lms.modules.profile.dtos;
 
-import com.app.lms.modules.admin_area.account.dtos.AccountDTO;
+import com.app.lms.modules.account.dtos.AccountDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

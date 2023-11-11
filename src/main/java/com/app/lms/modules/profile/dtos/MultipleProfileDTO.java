@@ -1,8 +1,8 @@
 package com.app.lms.modules.profile.dtos;
 
-import com.app.lms.modules.admin_area.admin.dtos.AdministratorDTO;
-import com.app.lms.modules.admin_area.instructor.dtos.InstructorDTO;
-import com.app.lms.modules.admin_area.student.dtos.StudentDTO;
+import com.app.lms.modules.admin.dtos.AdministratorDTO;
+import com.app.lms.modules.instructor.dtos.InstructorDTO;
+import com.app.lms.modules.student.dtos.StudentDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
